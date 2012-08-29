@@ -34,6 +34,22 @@ namespace MyPlacesTest.Server
                     EnqueueTestComplete();
                 }));
         }
+
+        [TestMethod, Asynchronous]
+        public void TestGetMapItems()
+        {
+            ServerConnection sc = new ServerConnection(adr);
+            sc.GetMapItems(new DataAsyncCallback<List<MapItem>>((result)
+                =>
+            {
+                List<MapItem> stars = result.DataResult;
+                Assert.IsNotNull(stars);
+                Assert.IsTrue(stars.Count > 0);
+                EnqueueTestComplete();
+            }));
+        }
+
+
     }
 
 }

@@ -20,13 +20,16 @@ namespace MyPlaces.Server
     {
         private string mServerUrl;
         private string mStarsUrl;
+        private string mMapItemsUrl;
 
-        private const string STARS_SUFFIX = "/stars";	
-        
-        public ServerConnection(string url)
+        private const string STARS_SUFFIX = "/stars";
+        private const string MAPITEMS_COORDS_SUFFIX = "/mapitems/{0}/{1}/{2}/{3}";
+
+        public ServerConnection(string url = "http://myplaces.scurab.com:8182")
         {
             mServerUrl = url;
             mStarsUrl = mServerUrl + STARS_SUFFIX;
+            mMapItemsUrl = mServerUrl + MAPITEMS_COORDS_SUFFIX;
         }
 
         /// <summary>
@@ -61,6 +64,23 @@ namespace MyPlaces.Server
                 sb.Append(sub);
             }
             return sb.ToString();
+        }
+
+        public void GetMapItems(DataAsyncCallback<List<MapItem>> dataAsyncCallback)
+        {
+            string url = String.Format(mMapItemsUrl,0,0,90,90);
+            WebRequest req = WebRequest.CreateHttp(url);
+            req.Method = "GET";
+            req.BeginGetResponse(new AsyncCallback(
+                (IAsyncResult result) =>
+                {
+                    WebResponse s = req.EndGetResponse(result);
+                    string json = ReadStreamToEnd(s.GetResponseStream());
+                    s.Close();
+
+                    List<MapItem> dataResult = JsonConvert.DeserializeObject<List<MapItem>>(json);
+                    dataAsyncCallback(new DataAsyncResult<List<MapItem>>(dataResult));
+                }), req);     
         }
     }
 

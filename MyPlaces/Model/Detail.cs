@@ -8,14 +8,23 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using Newtonsoft.Json;
 
 namespace MyPlaces.Model
 {
+    [JsonObject(MemberSerialization.OptIn)]
     public class Detail
     {
-        public long Id { get; set; }
+        [JsonProperty("id")]   
+        public long ID { get; set; }
+
+        [JsonProperty("what")]   
         public string What { get; set; }
+
+        [JsonProperty("text")]   
         public string Text { get; set; }
+
+        [JsonProperty("time")]   
         public DateTime Time { get; set; }
     }
 }

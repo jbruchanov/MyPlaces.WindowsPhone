@@ -9,30 +9,46 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace MyPlaces.Model
 {
+    [JsonObject(MemberSerialization.OptIn)]
     public class MapItem
     {
-        private long id { get; set; }
-        private string type { get; set; }
+        [JsonProperty("id")]
+        public long ID { get; set; }
 
-        private string name { get; set; }
-        private string country { get; set; }
-        private string city { get; set; }
-        private string street { get; set; }
-        private string web { get; set; }
-        private string streetViewLink { get; set; }
-        private string author { get; set; }
-        private string contact { get; set; }
+        [JsonProperty("type")]
+        public string Type { get; set; }
+        [JsonProperty("name")]
+        public string Name { get; set; }
+        [JsonProperty("country")]
+        public string Country { get; set; }
+        [JsonProperty("City")]
+        public string city { get; set; }
+        [JsonProperty("Street")]
+        public string street { get; set; }
+        [JsonProperty("Web")]
+        public string web { get; set; }
+        [JsonProperty("StreetViewLink")]
+        public string StreetViewLink { get; set; }
+        [JsonProperty("Author")]
+        public string author { get; set; }
+        [JsonProperty("Contact")]
+        public string contact { get; set; }
+        [JsonProperty("x")]
+        public double X { get; set; }
+        [JsonProperty("y")]
+        public double Y { get; set; }
+        [JsonProperty("rating")]
+        public int Rating { get; set; }
 
-        private double x { get; set; }
-        private double y { get; set; }
-
-        private int rating { get; set; }
-
-        private List<string> pros { get; set; }
-        private List<string> cons { get; set; }
-        private List<Detail> details { get; set; }
+        [JsonProperty("pros")]
+        public List<string> Pros { get; set; }
+        [JsonProperty("cons")]
+        public List<string> Cons { get; set; }
+        [JsonProperty("details")]
+        public List<Detail> Details { get; set; }
     }
 }
