@@ -8,15 +8,22 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using Newtonsoft.Json;
 
 namespace MyPlaces.Model
 {
+    [JsonObject(MemberSerialization.OptIn)]
     public class Star
     {
-        public long id {get;set;}
-        public string note {get;set;}
-        public string type {get;set;}
-        public double x {get;set;}
-        public double y {get;set;}
+        [JsonProperty("id")]      
+        public long ID {get;set;}
+        [JsonProperty("note")]  
+        public string Note {get;set;}
+        [JsonProperty("type")]  
+        public string Type {get;set;}
+        [JsonProperty("x")]  
+        public double X {get;set;}
+        [JsonProperty("y")]  
+        public double Y {get;set;}
     }
 }

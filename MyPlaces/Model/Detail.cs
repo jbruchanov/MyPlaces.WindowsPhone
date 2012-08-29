@@ -15,7 +15,7 @@ namespace MyPlaces.Model
     {
         public long Id { get; set; }
         public string What { get; set; }
-        public string Detail { get; set; }
+        public string Text { get; set; }
         public DateTime Time { get; set; }
     }
 }
