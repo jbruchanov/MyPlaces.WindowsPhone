@@ -10,6 +10,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using System.Windows.Media.Imaging;
 
 namespace MyPlaces.Model
 {
@@ -61,5 +62,41 @@ namespace MyPlaces.Model
         public List<string> Cons { get; set; }
         [JsonProperty("details")]
         public List<Detail> Details { get; set; }
+
+
+        public Image GetImage()
+        {
+            Image result = null;
+            string t = Type;
+            if (String.IsNullOrEmpty(t))
+                result = new Image { Source = new BitmapImage(new Uri("/Resources/Images/ico_pin.png", UriKind.RelativeOrAbsolute)) };
+            else
+                t = t.ToLower();
+
+            if (t.Equals("hospoda"))
+                result = new Image { Source = new BitmapImage(new Uri("/Resources/Images/ico_beer.png", UriKind.RelativeOrAbsolute)) };
+            else if (t.Equals("bar"))
+                result = new Image { Source = new BitmapImage(new Uri("/Resources/Images/ico_drink.png", UriKind.RelativeOrAbsolute)) };
+            else if (t.Equals("kavárna"))
+                result = new Image { Source = new BitmapImage(new Uri("/Resources/Images/ico_cafe.png", UriKind.RelativeOrAbsolute)) };
+            else if (t.Equals("café"))
+                result = new Image { Source = new BitmapImage(new Uri("/Resources/Images/ico_cafe.png", UriKind.RelativeOrAbsolute)) };
+            else if (t.Equals("restaurace"))
+                result = new Image { Source = new BitmapImage(new Uri("/Resources/Images/ico_restaurant.png", UriKind.RelativeOrAbsolute)) };
+            else if (t.Equals("pizzerie"))
+                result = new Image { Source = new BitmapImage(new Uri("/Resources/Images/ico_pizza.png", UriKind.RelativeOrAbsolute)) };
+            else if (t.Equals("fastfood"))
+                result = new Image { Source = new BitmapImage(new Uri("/Resources/Images/ico_fastfood.png", UriKind.RelativeOrAbsolute)) };
+            else if (t.Equals("club"))
+                result = new Image { Source = new BitmapImage(new Uri("/Resources/Images/ico_music.png", UriKind.RelativeOrAbsolute)) };
+            else if (t.Equals("zahrádka"))
+                result = new Image { Source = new BitmapImage(new Uri("/Resources/Images/ico_patio.png", UriKind.RelativeOrAbsolute)) };
+            else
+                result = new Image { Source = new BitmapImage(new Uri("/Resources/Images/ico_search.png", UriKind.RelativeOrAbsolute)) };
+
+
+            result.Stretch = System.Windows.Media.Stretch.None;
+            return result;
+        }
     }
 }

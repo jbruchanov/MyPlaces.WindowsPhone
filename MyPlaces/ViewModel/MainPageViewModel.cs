@@ -21,6 +21,8 @@ namespace MyPlaces.ViewModel
         private List<Star> mStars;
         private List<MapItem> mMapItems;
         private ServerConnection mConnection;
+        private MapLayer mSmileysLayer;
+        private MapLayer mItemsLayer;
 
         public MainPageViewModel(MainPage page)
         {
@@ -30,6 +32,12 @@ namespace MyPlaces.ViewModel
 
         private void init()
         {
+            mSmileysLayer = new MapLayer();
+            mItemsLayer = new MapLayer();
+
+            mPage.Map.Children.Add(mSmileysLayer);
+            mPage.Map.Children.Add(mItemsLayer);
+
             mConnection = new ServerConnection();
             mConnection.GetStars(new DataAsyncCallback<List<Star>>((res) => { mPage.Dispatcher.BeginInvoke(new Action(() => OnLoadStars(res.DataResult))); }));
             mConnection.GetMapItems(new DataAsyncCallback<List<MapItem>>((res) => { mPage.Dispatcher.BeginInvoke(new Action(() => OnLoadMapItems(res.DataResult))); }));
@@ -40,20 +48,16 @@ namespace MyPlaces.ViewModel
             mStars = data;
             foreach (Star s in data)
             {
-                Pushpin p = new Pushpin() { Location = new System.Device.Location.GeoCoordinate(s.Y, s.X), Tag = s };                
-                mPage.Map.Children.Add(p);                
+                mSmileysLayer.AddChild(s.GetImage(), new System.Device.Location.GeoCoordinate(s.Y, s.X));         
             }
         }
 
         public void OnLoadMapItems(List<MapItem> data)
         {
             mMapItems = data;
-            foreach (MapItem s in data)
+            foreach (MapItem mi in data)
             {
-                Pushpin p = new Pushpin() { Location = new System.Device.Location.GeoCoordinate(s.Y, s.X), Tag = s };
-                p.Content = new Rectangle(){Height = 5, Width =5, Stroke=new SolidColorBrush(Colors.Cyan),StrokeThickness = 3};
-                mPage.Map.Children.Add(p);
-                p.MouseLeftButtonUp += (o, e) => { MapItem mi = (MapItem)((Pushpin)o).Tag; MessageBox.Show(mi.Name); };
+                mItemsLayer.AddChild(mi.GetImage(), new System.Device.Location.GeoCoordinate(mi.Y, mi.X));        
             }
         }
     }
