@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 
 namespace MyPlaces.Model
 {
-    [JsonObject(MemberSerialization.OptOut)]
+    [JsonObject(MemberSerialization.OptIn)]
     public class MapItem
     {
         [JsonProperty("id")]
@@ -63,9 +63,13 @@ namespace MyPlaces.Model
         [JsonProperty("details")]
         public List<Detail> Details { get; set; }
 
+        private Image mImage;
 
         public Image GetImage()
         {
+            if (mImage != null)
+                return mImage;
+
             Image result = null;
             string t = Type;
             if (String.IsNullOrEmpty(t))
@@ -96,7 +100,8 @@ namespace MyPlaces.Model
 
 
             result.Stretch = System.Windows.Media.Stretch.None;
-            return result;
+            mImage = result;
+            return mImage;
         }
     }
 }

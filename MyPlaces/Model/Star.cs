@@ -27,8 +27,13 @@ namespace MyPlaces.Model
         [JsonProperty("y")]  
         public double Y {get;set;}
 
+
+        private Image mImage;
         public Image GetImage()
         {
+            if (mImage != null)
+                return mImage;
+
             Image result = null;
             if (Type.Equals("10"))
                 result = new Image { Source = new BitmapImage(new Uri("/Resources/Images/ico_star.png", UriKind.RelativeOrAbsolute)) };
@@ -53,7 +58,8 @@ namespace MyPlaces.Model
 
             //result.Opacity = 0.8;
             result.Stretch = System.Windows.Media.Stretch.None;
-            return result;
+            mImage = result;
+            return mImage;
         }
     }
 }
