@@ -71,7 +71,10 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Server\ServerConnectionTest.cs" />
+    <Compile Include="Server\TestWriteAndMapItem.cs" />
+    <Compile Include="Server\TestGetMapItems.cs" />
+    <Compile Include="Server\TestGetStars.cs" />
+    <Compile Include="Server\TestWriteAndDeleteStar.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">

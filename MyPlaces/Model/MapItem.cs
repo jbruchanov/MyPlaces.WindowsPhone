@@ -13,7 +13,7 @@ using Newtonsoft.Json;
 
 namespace MyPlaces.Model
 {
-    [JsonObject(MemberSerialization.OptIn)]
+    [JsonObject(MemberSerialization.OptOut)]
     public class MapItem
     {
         [JsonProperty("id")]
@@ -21,26 +21,37 @@ namespace MyPlaces.Model
 
         [JsonProperty("type")]
         public string Type { get; set; }
+        
         [JsonProperty("name")]
         public string Name { get; set; }
+        
         [JsonProperty("country")]
         public string Country { get; set; }
-        [JsonProperty("City")]
-        public string city { get; set; }
-        [JsonProperty("Street")]
-        public string street { get; set; }
-        [JsonProperty("Web")]
-        public string web { get; set; }
-        [JsonProperty("StreetViewLink")]
+        
+        [JsonProperty("city")]
+        public string City { get; set; }
+        
+        [JsonProperty("street")]
+        public string Street { get; set; }
+        
+        [JsonProperty("web")]
+        public string Web { get; set; }
+        
+        [JsonProperty("streetViewLink")]
         public string StreetViewLink { get; set; }
-        [JsonProperty("Author")]
-        public string author { get; set; }
-        [JsonProperty("Contact")]
-        public string contact { get; set; }
+        
+        [JsonProperty("author")]
+        public string Author { get; set; }
+        
+        [JsonProperty("contact")]
+        public string Contact { get; set; }
+        
         [JsonProperty("x")]
         public double X { get; set; }
+        
         [JsonProperty("y")]
         public double Y { get; set; }
+        
         [JsonProperty("rating")]
         public int Rating { get; set; }
 
