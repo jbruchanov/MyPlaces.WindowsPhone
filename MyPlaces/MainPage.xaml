@@ -11,6 +11,7 @@
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
+    xmlns:mpv="clr-namespace:MyPlaces.View"
     shell:SystemTray.IsVisible="True" xmlns:my="clr-namespace:Microsoft.Phone.Controls.Maps;assembly=Microsoft.Phone.Controls.Maps">
 
     
@@ -18,6 +19,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <!--TitlePanel contains the name of the application and page title-->
@@ -26,8 +28,8 @@
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
-        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <my:Map Name="Map" CredentialsProvider="AvSVwNylWZFgFYUZ7OathJMmY1L2Gd4bObRisS0vNvrAObiscGbb7n45oMgXi5bv" />
-        </Grid>
+
+        <my:Map Name="Map" Grid.Row="1" CredentialsProvider="AvSVwNylWZFgFYUZ7OathJMmY1L2Gd4bObRisS0vNvrAObiscGbb7n45oMgXi5bv" ZoomBarVisibility="Visible" ZoomLevel="5" LogoVisibility="Collapsed" Center="50,5"/>
+        <mpv:MapItemPreview x:Name="MapItemPreview" Grid.Row="2" /> 
     </Grid>   
 </phone:PhoneApplicationPage>
