@@ -37,7 +37,6 @@ namespace MyPlaces.ViewModel
 
             mPage.Map.Children.Add(mSmileysLayer);
             mPage.Map.Children.Add(mItemsLayer);
-
             mConnection = new ServerConnection();
             mConnection.GetStars(new DataAsyncCallback<List<Star>>((res) => { mPage.Dispatcher.BeginInvoke(new Action(() => OnLoadStars(res.DataResult))); }));
             mConnection.GetMapItems(new DataAsyncCallback<List<MapItem>>((res) => { mPage.Dispatcher.BeginInvoke(new Action(() => OnLoadMapItems(res.DataResult))); }));
@@ -77,7 +76,8 @@ namespace MyPlaces.ViewModel
         public virtual void OnItemClick(MapItem mi)
         {
             //MessageBox.Show(mi.Name);
-            mPage.MapItemPreview.Show();
+            mPage.Map.Center = new System.Device.Location.GeoCoordinate(mi.Y, mi.X);
+            mPage.MapItemPreview.Show(mi);
         }
     }
 }

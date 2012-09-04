@@ -147,27 +147,27 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <Button Name="StreetView" Grid.Column="0" Style="{StaticResource ButtonStyle}">
+            <Button Name="StreetView" Grid.Column="0" Style="{StaticResource ButtonStyle}" Click="Button_Click">
                 <Button.Content>
                     <Image Source="/MyPlaces;component/Resources/Buttons/dark/appbar.eye.png" Stretch="Uniform" />
                 </Button.Content>
             </Button>
-            <Button Name="Web" Grid.Column="1" Style="{StaticResource ButtonStyle}">
+            <Button Name="Web" Grid.Column="1" Style="{StaticResource ButtonStyle}" Click="Button_Click">
                 <Button.Content>
                     <Image Source="/MyPlaces;component/Resources/Buttons/dark/appbar.globe.png" Stretch="Uniform" />
                 </Button.Content>
             </Button>
-            <Button Name="Phone" Grid.Column="2" Style="{StaticResource ButtonStyle}">
+            <Button Name="Phone" Grid.Column="2" Style="{StaticResource ButtonStyle}" Click="Button_Click">
                 <Button.Content>
                     <Image Source="/MyPlaces;component/Resources/Buttons/dark/appbar.phone.png" Stretch="Uniform" />
                 </Button.Content>
             </Button>
-            <Button Name="Share" Grid.Column="3" Style="{StaticResource ButtonStyle}">
+            <Button Name="Share" Grid.Column="3" Style="{StaticResource ButtonStyle}" Click="Button_Click">
                 <Button.Content>
                     <Image Source="/MyPlaces;component/Resources/Buttons/dark/appbar.share.png" Stretch="Uniform" />
                 </Button.Content>
             </Button>
-            <Button Name="More" Grid.Column="4" Style="{StaticResource ButtonStyle}">
+            <Button Name="More" Grid.Column="4" Style="{StaticResource ButtonStyle}" Click="Button_Click">
                 <Button.Content>
                     <Image Source="/MyPlaces;component/Resources/Buttons/dark/appbar.edit.png" Stretch="Uniform" />
                 </Button.Content>
