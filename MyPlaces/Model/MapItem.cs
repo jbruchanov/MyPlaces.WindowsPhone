@@ -11,11 +11,12 @@ using System.Windows.Shapes;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using System.Windows.Media.Imaging;
+using System.ComponentModel;
 
 namespace MyPlaces.Model
 {
     [JsonObject(MemberSerialization.OptIn)]
-    public class MapItem
+    public class MapItem : INotifyPropertyChanged
     {
         [JsonProperty("id")]
         public long ID { get; set; }
@@ -103,5 +104,7 @@ namespace MyPlaces.Model
             mImage = result;
             return mImage;
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

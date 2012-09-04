@@ -205,6 +205,37 @@ namespace MyPlaces.Server
                 }), req);     
         }
 
+        public void GetMapItem(string mapItemId, DataAsyncCallback<MapItem> dataAsyncCallback)
+        {
+            string url = String.Format(mMapItemsUrl + "/" + mapItemId);
+            WebRequest req = WebRequest.CreateHttp(url);
+            req.Method = "GET";
+            req.BeginGetResponse(new AsyncCallback(
+                (IAsyncResult result) =>
+                {
+                    MapItem dataResult = null;
+                    Exception err = null;
+                    try
+                    {
+                        WebResponse s = req.EndGetResponse(result);
+                        string json = ReadStreamToEnd(s.GetResponseStream());
+                        s.Close();
+                        List<MapItem> subResult = JsonConvert.DeserializeObject<List<MapItem>>(json);
+                        if (subResult.Count == 1)
+                            dataResult = subResult[0];
+                        dataAsyncCallback.Invoke(new DataAsyncResult<MapItem>(dataResult));
+                    }
+                    catch (Exception e)
+                    {
+                        err = e;
+                    }
+                    finally
+                    {
+                        dataAsyncCallback(new DataAsyncResult<MapItem>(dataResult, err));
+                    }
+                }), req);
+        }
+
 
 
         public void Save(MapItem mi, DataAsyncCallback<MapItem> Callback)

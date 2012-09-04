@@ -11,6 +11,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using MyPlaces.Model;
 using Microsoft.Phone.Tasks;
+using MyPlaces.ViewModel;
 
 namespace MyPlaces.View
 {
@@ -18,6 +19,8 @@ namespace MyPlaces.View
     {
         private bool mIsVisible = true;
         private MapItem mItem;
+        public event EventHandler<DataEventArgs<MapItem>> OpenDetailClick;
+
         public MapItemPreview()
         {
             InitializeComponent();
@@ -82,7 +85,8 @@ namespace MyPlaces.View
 
         public virtual void OnMoreClick()
         {
-             
+            if (OpenDetailClick != null)
+                OpenDetailClick.Invoke(this, new DataEventArgs<MapItem>(mItem));
         }
 
         public virtual void OnShareClick()

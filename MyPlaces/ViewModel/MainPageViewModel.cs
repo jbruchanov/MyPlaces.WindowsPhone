@@ -40,6 +40,20 @@ namespace MyPlaces.ViewModel
             mConnection = new ServerConnection();
             mConnection.GetStars(new DataAsyncCallback<List<Star>>((res) => { mPage.Dispatcher.BeginInvoke(new Action(() => OnLoadStars(res.DataResult))); }));
             mConnection.GetMapItems(new DataAsyncCallback<List<MapItem>>((res) => { mPage.Dispatcher.BeginInvoke(new Action(() => OnLoadMapItems(res.DataResult))); }));
+            mPage.MapItemPreview.OpenDetailClick += new EventHandler<DataEventArgs<MapItem>>(MapItemPreview_OpenDetailClick);
+        }
+
+        private void MapItemPreview_OpenDetailClick(object sender, DataEventArgs<MapItem> e)
+        {
+            if (e.DataContext != null)
+            {
+                string uri = String.Format("/View/MapItemDetail.xaml?{0}={1}", App.MAP_ITEM_ID, e.DataContext.ID);
+                mPage.NavigationService.Navigate(new Uri(uri, UriKind.RelativeOrAbsolute));
+            }
+            else
+            {
+                MessageBox.Show("Null MapItem");
+            }
         }
 
         public virtual void OnLoadStars(List<Star> data)
