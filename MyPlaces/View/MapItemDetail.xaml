@@ -24,7 +24,7 @@
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <!--Pivot Control-->
-        <controls:Pivot Name="RootPivot" Title="{Binding Name}" FontSize="32" >
+        <controls:Pivot Name="RootPivot" Title="{Binding Source={StaticResource Labels}, Path=Labels.lblLoading}" FontSize="32" >
             <!--Pivot item one-->
             <controls:PivotItem Header="{Binding Source={StaticResource Labels}, Path=Labels.lblDetail}">
                 <ScrollViewer>

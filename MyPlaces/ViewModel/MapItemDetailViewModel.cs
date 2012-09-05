@@ -150,6 +150,7 @@ namespace MyPlaces.ViewModel
         public void SetMapItem(MapItem mi)
         {
             mMapItem = mi;
+            mPage.RootPivot.Title = mi.Name;
             mPage.DataContext = mi;
         }
 

@@ -142,6 +142,15 @@ namespace MyPlaces.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Loading ....
+        /// </summary>
+        public static string lblLoading {
+            get {
+                return ResourceManager.GetString("lblLoading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Longtitude.
         /// </summary>
         public static string lblLongtitude {

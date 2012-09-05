@@ -144,6 +144,9 @@
   <data name="lblLatitude" xml:space="preserve">
     <value>Latitude</value>
   </data>
+  <data name="lblLoading" xml:space="preserve">
+    <value>Loading ...</value>
+  </data>
   <data name="lblLongtitude" xml:space="preserve">
     <value>Longtitude</value>
   </data>
