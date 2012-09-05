@@ -71,8 +71,8 @@ namespace MyPlaces.ViewModel
 
         public virtual void OnItemClick(Star s)
         {
-            //MessageBox.Show(s.Note);
-            mPage.MapItemPreview.Show();
+            MessageBox.Show(s.Note);
+            //mPage.MapItemPreview.Show();
         }
 
         public virtual void OnLoadMapItems(List<MapItem> data)
