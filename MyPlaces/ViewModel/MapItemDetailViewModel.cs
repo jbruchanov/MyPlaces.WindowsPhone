@@ -13,6 +13,8 @@ using MyPlaces.Server;
 using MyPlaces.Model;
 using Microsoft.Phone.Shell;
 using System.Collections.Generic;
+using System.Device.Location;
+using Microsoft.Phone.Controls.Maps;
 
 namespace MyPlaces.ViewModel
 {
@@ -28,6 +30,8 @@ namespace MyPlaces.ViewModel
         private ApplicationBarIconButton mSearchButton;
         private ApplicationBarIconButton mAddButton;
 
+        private Pushpin mPushpin;
+
         public MapItemDetailViewModel(MapItemDetail page)
         {
             mPage = page;
@@ -39,8 +43,23 @@ namespace MyPlaces.ViewModel
         private void Init()
         {
             mServerConnection = new ServerConnection();
-            mMapItemId = mPage.NavigationContext.QueryString[App.MAP_ITEM_ID];
-            if(String.IsNullOrEmpty(mMapItemId))
+            IDictionary<string,string> queryString = mPage.NavigationContext.QueryString;
+            bool quit = false;
+            if (queryString.ContainsKey(App.MAP_ITEM_ID))
+            {
+                mMapItemId = mPage.NavigationContext.QueryString[App.MAP_ITEM_ID];
+            }
+            else if (queryString.ContainsKey(App.X) && queryString.ContainsKey(App.Y))
+            {
+                double cx = Convert.ToDouble(queryString[App.X]);
+                double cy = Convert.ToDouble(queryString[App.Y]);
+                SetMapItem(new MapItem { X = cx, Y = cy });
+            }
+            else
+                quit = true;
+
+
+            if (quit)
             {
                 mPage.NavigationService.GoBack();
             }
@@ -50,12 +69,33 @@ namespace MyPlaces.ViewModel
             }
 
             mPage.RootPivot.SelectionChanged += new SelectionChangedEventHandler(RootPivot_SelectionChanged);
+            mPage.Map.MouseLeftButtonDown += new MouseButtonEventHandler(Map_MouseLeftButtonDown);
+            mPage.Map.MouseLeftButtonUp += new MouseButtonEventHandler(OnMapClick);
+        }
+
+        private long mMouseLeftButtonDownTime;
+        void Map_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            mMouseLeftButtonDownTime = DateTime.Now.Ticks;
+        }
+
+        void OnMapClick(object sender, MouseButtonEventArgs e)
+        {
+            long diff = DateTime.Now.Ticks - mMouseLeftButtonDownTime;
+            if (diff < 1000000)
+            {
+                GeoCoordinate coord = mPage.Map.ViewportPointToLocation(e.GetPosition(mPage.Map));
+                mMapItem.X = coord.Longitude;
+                mMapItem.Y = coord.Latitude;
+                mPushpin.Location = coord;
+            }
         }
 
         public virtual void OnDownloadMapItemTypes(List<string> list)
         {
             mPage.lpType.ItemsSource = list;
-            mServerConnection.GetMapItem(mMapItemId, new DataAsyncCallback<MapItem>((r) => { mPage.Dispatcher.BeginInvoke(() => OnDownloadMapItem(r.DataResult)); }));
+            if(!String.IsNullOrEmpty(mMapItemId))
+                mServerConnection.GetMapItem(mMapItemId, new DataAsyncCallback<MapItem>((r) => { mPage.Dispatcher.BeginInvoke(() => OnDownloadMapItem(r.DataResult)); }));
         }
 
         void RootPivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -153,6 +193,14 @@ namespace MyPlaces.ViewModel
             mMapItem = mi;
             mPage.RootPivot.Title = mi.Name;
             mPage.DataContext = mi;
+            if (mPushpin == null)
+            {
+                mPushpin = new Pushpin { Location = new GeoCoordinate { Longitude = mi.X, Latitude = mi.Y } };
+                mPage.Map.Children.Add(mPushpin);
+            }
+            else
+                mPushpin.Location = new GeoCoordinate { Longitude = mi.X, Latitude = mi.Y };
+            
         }
 
         public MapItem GetMapItem()

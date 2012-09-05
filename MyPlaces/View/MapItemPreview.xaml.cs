@@ -17,19 +17,20 @@ namespace MyPlaces.View
 {
     public partial class MapItemPreview : UserControl
     {
-        private bool mIsVisible = true;
+        public bool IsVisible { get; private set; }
         private MapItem mItem;
         public event EventHandler<DataEventArgs<MapItem>> OpenDetailClick;
 
         public MapItemPreview()
         {
             InitializeComponent();
-            Hide();
+            IsVisible = false;
+            LayoutRoot.Height = 0;
         }
 
         private void Close_Click(object sender, RoutedEventArgs e)
         {
-            if (mIsVisible)
+            if (IsVisible)
                 HideAnim.Begin();
         }
 
@@ -38,24 +39,24 @@ namespace MyPlaces.View
         {
             if (mi != null)
                 SetMapItem(mi);
-            if (!mIsVisible)
+            if (!IsVisible)
                 ShowAnim.Begin();
         }
 
         public void Hide()
         {
-            if (mIsVisible)
+            if (IsVisible)
                 HideAnim.Begin();
         }
 
         private void HideAnim_Completed(object sender, EventArgs e)
         {
-            mIsVisible = false;
+            IsVisible = false;
         }
 
         private void ShowAnim_Completed(object sender, EventArgs e)
         {
-            mIsVisible = true;
+            IsVisible = true;
         }
 
         public void SetMapItem(MapItem mi)

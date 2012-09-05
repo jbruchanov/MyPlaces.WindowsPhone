@@ -20,5 +20,21 @@ namespace MyPlaces
                 return "MAP_ITEM_ID";
             }
         }
+        public static string X
+        {
+            get
+            {
+                return "X";
+            }
+        }
+
+        public static string Y
+        {
+            get
+            {
+                return "Y";
+            }
+        }
+
     }
 }

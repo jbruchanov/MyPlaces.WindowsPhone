@@ -27,10 +27,20 @@ namespace MyPlaces.ViewModel
         public MainPageViewModel(MainPage page)
         {
             mPage = page;
-            mPage.Loaded += new RoutedEventHandler((o,e) => init());
+            mPage.Loaded += new RoutedEventHandler((o,e) => Init());
+            mPage.BackKeyPress += new EventHandler<System.ComponentModel.CancelEventArgs>(OnBackPress);
         }
 
-        private void init()
+        void OnBackPress(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (mPage.MapItemPreview.IsVisible)
+            {
+                mPage.MapItemPreview.Hide();
+                e.Cancel = true;
+            }
+        }
+
+        private void Init()
         {
             mSmileysLayer = new MapLayer();
             mItemsLayer = new MapLayer();
@@ -41,6 +51,12 @@ namespace MyPlaces.ViewModel
             mConnection.GetStars(new DataAsyncCallback<List<Star>>((res) => { mPage.Dispatcher.BeginInvoke(new Action(() => OnLoadStars(res.DataResult))); }));
             mConnection.GetMapItems(new DataAsyncCallback<List<MapItem>>((res) => { mPage.Dispatcher.BeginInvoke(new Action(() => OnLoadMapItems(res.DataResult))); }));
             mPage.MapItemPreview.OpenDetailClick += new EventHandler<DataEventArgs<MapItem>>(MapItemPreview_OpenDetailClick);
+            mPage.Map.MouseLeftButtonUp += new MouseButtonEventHandler(OnMapClick);
+        }
+
+        void OnMapClick(object sender, MouseButtonEventArgs e)
+        {
+            
         }
 
         private void MapItemPreview_OpenDetailClick(object sender, DataEventArgs<MapItem> e)
