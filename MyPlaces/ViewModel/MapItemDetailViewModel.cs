@@ -101,6 +101,7 @@ namespace MyPlaces.ViewModel
             };
             mSaveButton.Click += new EventHandler(OnApplicationBarButtonClick);
             mPage.ApplicationBar.Buttons.Add(mSaveButton);
+            
         }
 
         public virtual void OnApplicationBarButtonClick(object sender, EventArgs e)

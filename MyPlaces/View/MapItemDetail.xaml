@@ -14,9 +14,11 @@
     SupportedOrientations="Portrait"  Orientation="Portrait"
     xmlns:res="clr-namespace:MyPlaces.Resources"
     xmlns:my="clr-namespace:Microsoft.Phone.Controls.Maps;assembly=Microsoft.Phone.Controls.Maps"
+    xmlns:conv="clr-namespace:MyPlaces.Converters"
     shell:SystemTray.IsVisible="True">
     <phone:PhoneApplicationPage.Resources>
         <res:Res x:Key="Labels" />
+        <conv:MapItem2CoordsConverer x:Key="CoordConverter" />
         <Style TargetType="TextBlock">
             <Setter Property="FontSize" Value="22" />
         </Style>
@@ -57,7 +59,7 @@
 
             <!--Pivot item two-->
             <controls:PivotItem Header="Position">
-                <my:Map Name="Map" Grid.Row="1" CredentialsProvider="AvSVwNylWZFgFYUZ7OathJMmY1L2Gd4bObRisS0vNvrAObiscGbb7n45oMgXi5bv" ZoomBarVisibility="Visible" ZoomLevel="5" LogoVisibility="Collapsed" Center="50,5"/>
+                <my:Map Name="Map" Grid.Row="1" CredentialsProvider="AvSVwNylWZFgFYUZ7OathJMmY1L2Gd4bObRisS0vNvrAObiscGbb7n45oMgXi5bv" ZoomBarVisibility="Visible" ZoomLevel="18" LogoVisibility="Collapsed" Center="{Binding Converter={StaticResource CoordConverter}}"/>
             </controls:PivotItem>
 
             <controls:PivotItem Header="Context">

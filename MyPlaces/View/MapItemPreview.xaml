@@ -138,7 +138,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <TextBlock Name="PlaceName" Text="Mc Donald" FontSize="36" Grid.Row="0" Grid.ColumnSpan="2" />
-        <TextBlock Name="PlaceLocation" Text="Orange Street 123" FontSize="22" Foreground="LightGray" Grid.Row="1" Grid.ColumnSpan="2" />
+        <TextBlock Name="PlaceLocation" Text="Orange Street 123" FontSize="22" Foreground="LightGray" Grid.Row="1" TextWrapping="Wrap" />
         <Grid  Grid.Row="2" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
