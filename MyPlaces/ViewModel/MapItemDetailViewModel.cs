@@ -70,24 +70,25 @@ namespace MyPlaces.ViewModel
                 return;
             mDeleteButton = new ApplicationBarIconButton
 	        {
-                IconUri = new Uri("/MyPlaces;component/Resources/Buttons/light/appbar.disk.png", UriKind.Relative),
-	            Text = Resources.Labels.lblDelete,                  
+                IconUri = new Uri("/Resources/Icons/AppBarWhite/appbar.delete.rest.png", UriKind.Relative),
+	            Text = Resources.Labels.lblDelete       
 	        };
             mDeleteButton.Click += new EventHandler(OnApplicationBarButtonClick);
             mPage.ApplicationBar.Buttons.Add(mDeleteButton);
 
             mSearchButton = new ApplicationBarIconButton
             {
-                IconUri = new Uri("/MyPlaces;component/Resources/Buttons/light/appbar.disk.png", UriKind.RelativeOrAbsolute),
-                Text = Resources.Labels.lblSearch,
+                IconUri = new Uri("/Resources/Icons/AppBarWhite/appbar.feature.search.rest.png", UriKind.RelativeOrAbsolute),
+                Text = Resources.Labels.lblSearch
             };
             mSearchButton.Click += new EventHandler(OnApplicationBarButtonClick);
             mPage.ApplicationBar.Buttons.Add(mSearchButton);
 
             mAddButton = new ApplicationBarIconButton
             {
-                IconUri = new Uri("/MyPlaces;component/Resources/Buttons/light/appbar.disk.png", UriKind.RelativeOrAbsolute),
+                IconUri = new Uri("/Resources/Icons/AppBarWhite/appbar.add.rest.png", UriKind.RelativeOrAbsolute),
                 Text = Resources.Labels.lblAdd,
+                IsEnabled = false
             };
             mAddButton.Click += new EventHandler(OnApplicationBarButtonClick);
             mPage.ApplicationBar.Buttons.Add(mAddButton);
@@ -95,7 +96,7 @@ namespace MyPlaces.ViewModel
 
             mSaveButton = new ApplicationBarIconButton
             {
-                IconUri = new Uri("/MyPlaces;component/Resources/Buttons/light/appbar.disk.png", UriKind.Relative),
+                IconUri = new Uri("/Resources/Icons/AppBarWhite/appbar.save.rest.png", UriKind.Relative),
                 Text = Resources.Labels.lblSave,
             };
             mSaveButton.Click += new EventHandler(OnApplicationBarButtonClick);

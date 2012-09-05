@@ -96,6 +96,8 @@ namespace MyPlaces.Model
                 result = new Image { Source = new BitmapImage(new Uri("/Resources/Images/ico_music.png", UriKind.RelativeOrAbsolute)) };
             else if (t.Equals("zahrádka"))
                 result = new Image { Source = new BitmapImage(new Uri("/Resources/Images/ico_patio.png", UriKind.RelativeOrAbsolute)) };
+            else if (t.Equals("sushi"))
+                result = new Image { Source = new BitmapImage(new Uri("/Resources/Images/ico_sushi.png", UriKind.RelativeOrAbsolute)) };
             else
                 result = new Image { Source = new BitmapImage(new Uri("/Resources/Images/ico_search.png", UriKind.RelativeOrAbsolute)) };
 

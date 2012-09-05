@@ -69,6 +69,7 @@
     <!--Sample code showing usage of ApplicationBar-->
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" BackgroundColor="Transparent" IsMenuEnabled="True" />
+          
     </phone:PhoneApplicationPage.ApplicationBar>
     
 </phone:PhoneApplicationPage>
