@@ -182,7 +182,7 @@ namespace MyPlaces.Server
 
         public void GetMapItems(DataAsyncCallback<List<MapItem>> dataAsyncCallback)
         {
-            string url = String.Format(mMapItemsCoordsUrl,0,0,90,90);
+            string url = String.Format(mMapItemsCoordsUrl,-180,-90,90,180);
             WebRequest req = WebRequest.CreateHttp(url);
             req.Method = "GET";
             req.BeginGetResponse(new AsyncCallback(
