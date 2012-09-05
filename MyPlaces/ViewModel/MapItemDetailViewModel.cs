@@ -23,7 +23,8 @@ namespace MyPlaces.ViewModel
         private MapItemDetail mPage;
         private ServerConnection mServerConnection;
         private string mMapItemId;
-        private MapItem mMapItem;
+        public MapItem MapItem { get; private set; }
+        public ICollection<FrameworkElement> ContextItems { get; set; }
 
         private ApplicationBarIconButton mDeleteButton;
         private ApplicationBarIconButton mSaveButton;
@@ -36,8 +37,6 @@ namespace MyPlaces.ViewModel
         {
             mPage = page;
             mPage.Loaded += (o, e) => { InitAppBar(); Init(); };
-            
-            
         }
 
         private void Init()
@@ -85,8 +84,8 @@ namespace MyPlaces.ViewModel
             if (diff < 1000000)
             {
                 GeoCoordinate coord = mPage.Map.ViewportPointToLocation(e.GetPosition(mPage.Map));
-                mMapItem.X = coord.Longitude;
-                mMapItem.Y = coord.Latitude;
+                MapItem.X = coord.Longitude;
+                MapItem.Y = coord.Latitude;
                 mPushpin.Location = coord;
             }
         }
@@ -190,9 +189,10 @@ namespace MyPlaces.ViewModel
 
         public void SetMapItem(MapItem mi)
         {
-            mMapItem = mi;
+            MapItem = mi;
+            ContextItems = CreateList(mi);
             mPage.RootPivot.Title = mi.Name;
-            mPage.DataContext = mi;
+            mPage.DataContext = this;
             if (mPushpin == null)
             {
                 mPushpin = new Pushpin { Location = new GeoCoordinate { Longitude = mi.X, Latitude = mi.Y } };
@@ -200,7 +200,27 @@ namespace MyPlaces.ViewModel
             }
             else
                 mPushpin.Location = new GeoCoordinate { Longitude = mi.X, Latitude = mi.Y };
-            
+        }
+
+        private List<FrameworkElement> CreateList(MapItem mi)
+        {
+            List<FrameworkElement> result = new List<FrameworkElement>();
+            if (mi.Pros != null)
+            {
+                foreach (string pro in mi.Pros)
+                    result.Add(new MapItemContextView(pro, MapItemContextView.ContextType.Pro));
+            }
+            if (mi.Cons != null)
+            {
+                foreach (string con in mi.Cons)
+                    result.Add(new MapItemContextView(con, MapItemContextView.ContextType.Con));
+            }
+            if (mi.Details != null)
+            {
+                foreach (Detail d in mi.Details)
+                    result.Add(new MapItemContextView(d, MapItemContextView.ContextType.Detail));
+            }
+            return result;
         }
 
         public MapItem GetMapItem()

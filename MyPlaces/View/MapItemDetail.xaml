@@ -24,13 +24,13 @@
         </Style>
     </phone:PhoneApplicationPage.Resources>
     <!--LayoutRoot is the root grid where all page content is placed-->
-    <Grid x:Name="LayoutRoot" Background="Transparent">
+    <Grid x:Name="LayoutRoot" Background="Transparent" >
         <!--Pivot Control-->
         <controls:Pivot Name="RootPivot" Title="{Binding Source={StaticResource Labels}, Path=Labels.lblLoading}" FontSize="32" >
             <!--Pivot item one-->
             <controls:PivotItem Header="{Binding Source={StaticResource Labels}, Path=Labels.lblDetail}">
                 <ScrollViewer>
-                    <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Vertical" DataContext="{Binding Path=MapItem}">
                         <TextBlock Text="{Binding Source={StaticResource Labels}, Path=Labels.lblName}" />
                         <TextBox Name="txtName" Text="{Binding Name}" />
                         <TextBlock Text="{Binding Source={StaticResource Labels}, Path=Labels.lblStreet}" />
@@ -59,11 +59,11 @@
 
             <!--Pivot item two-->
             <controls:PivotItem Header="Position">
-                <my:Map Name="Map" Grid.Row="1" CredentialsProvider="AvSVwNylWZFgFYUZ7OathJMmY1L2Gd4bObRisS0vNvrAObiscGbb7n45oMgXi5bv" ZoomBarVisibility="Visible" ZoomLevel="18" LogoVisibility="Collapsed" Center="{Binding Converter={StaticResource CoordConverter}}"/>
+                <my:Map Name="Map" Grid.Row="1" CredentialsProvider="AvSVwNylWZFgFYUZ7OathJMmY1L2Gd4bObRisS0vNvrAObiscGbb7n45oMgXi5bv" ZoomBarVisibility="Visible" ZoomLevel="18" LogoVisibility="Collapsed" Center="{Binding Path=MapItem, Converter={StaticResource CoordConverter}}"/>
             </controls:PivotItem>
 
             <controls:PivotItem Header="Context">
-                <Grid/>
+                <ListBox Name="lbContext" ItemsSource="{Binding Path=ContextItems}" />
             </controls:PivotItem>
         </controls:Pivot>
     </Grid>

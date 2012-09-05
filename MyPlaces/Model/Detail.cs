@@ -25,7 +25,7 @@ namespace MyPlaces.Model
         public string What { get { return mWhat; } set { mWhat = value; NotifyPropertyChange("What"); } }
 
         private string mText;
-        [JsonProperty("text")]
+        [JsonProperty("detail")]
         public string Text { get { return mText; } set { mText = value; NotifyPropertyChange("Text"); } }
 
         private DateTime mTime;

@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="MyPlaces.View.MapItemContextView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    d:DesignHeight="120" d:DesignWidth="480">
+    
+    <Grid x:Name="LayoutRoot">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Image Name="Icon"  Source="/Resources/Images/ico_plus_smaller.png" Grid.Column="0" Grid.Row="0" Stretch="None" Margin="10"/>
+        <StackPanel Name="TextStack" Grid.Column="1" Grid.Row="0" Margin="10,0,10,0" VerticalAlignment="Center">
+            <TextBlock Name="ContentTop" Text="ABC"   FontSize="36" TextWrapping="Wrap" FontWeight="Bold"/>
+            <TextBlock Name="ContentBottom" Text="ABC" FontSize="24" TextWrapping="Wrap"/>
+        </StackPanel>
+        
+    </Grid>
+</UserControl>
