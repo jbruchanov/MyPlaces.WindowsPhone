@@ -12,60 +12,78 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using System.Windows.Media.Imaging;
 using System.ComponentModel;
+using System.Collections.ObjectModel;
 
 namespace MyPlaces.Model
 {
     [JsonObject(MemberSerialization.OptIn)]
     public class MapItem : INotifyPropertyChanged
     {
+        private long mID;
         [JsonProperty("id")]
-        public long ID { get; set; }
+        public long ID { get { return mID; } set { mID = value; NotifyPropertyChange("ID"); } }
 
+        private string mType;
         [JsonProperty("type")]
-        public string Type { get; set; }
-        
-        [JsonProperty("name")]
-        public string Name { get; set; }
-        
-        [JsonProperty("country")]
-        public string Country { get; set; }
-        
-        [JsonProperty("city")]
-        public string City { get; set; }
-        
-        [JsonProperty("street")]
-        public string Street { get; set; }
-        
-        [JsonProperty("web")]
-        public string Web { get; set; }
-        
-        [JsonProperty("streetViewLink")]
-        public string StreetViewLink { get; set; }
-        
-        [JsonProperty("author")]
-        public string Author { get; set; }
-        
-        [JsonProperty("contact")]
-        public string Contact { get; set; }
-        
-        [JsonProperty("x")]
-        public double X { get; set; }
-        
-        [JsonProperty("y")]
-        public double Y { get; set; }
-        
-        [JsonProperty("rating")]
-        public int Rating { get; set; }
+        public string Type { get { return mType; } set { mType = value; mImage = null; NotifyPropertyChange("Type"); } }
 
+        private string mName;
+        [JsonProperty("name")]
+        public string Name { get { return mName; } set { mName = value; NotifyPropertyChange("Name"); } }
+
+        private string mCountry;
+        [JsonProperty("country")]
+        public string Country { get { return mCountry; } set { mCountry = value; NotifyPropertyChange("Country"); } }
+
+        private string mCity;
+        [JsonProperty("city")]
+        public string City { get { return mCity; } set { mCity = value; NotifyPropertyChange("City"); } }
+
+        private string mStreet;
+        [JsonProperty("street")]
+        public string Street { get { return mStreet; } set { mStreet = value; NotifyPropertyChange("Street"); } }
+
+        private string mWeb;
+        [JsonProperty("web")]
+        public string Web { get { return mWeb; } set { mWeb = value; NotifyPropertyChange("Web"); } }
+
+        private string mStreetViewLink;
+        [JsonProperty("streetViewLink")]
+        public string StreetViewLink { get { return mStreetViewLink; } set { mStreetViewLink = value; NotifyPropertyChange("StreetViewLink"); } }
+
+        private string mAuthor;
+        [JsonProperty("author")]
+        public string Author { get { return mAuthor; } set { mAuthor = value; NotifyPropertyChange("Author"); } }
+
+        private string mContact;
+        [JsonProperty("contact")]
+        public string Contact { get { return mContact; } set { mContact = value; NotifyPropertyChange("Contact"); } }
+
+        private double mX;
+        [JsonProperty("x")]
+        public double X { get { return mX; } set { mX = value; NotifyPropertyChange("X"); } }
+
+        private double mY;
+        [JsonProperty("y")]
+        public double Y { get { return mY; } set { mY = value; NotifyPropertyChange("Y"); } }
+
+        private int mRating;
+        [JsonProperty("rating")]
+        public int Rating { get { return mRating; } set { mRating = value; NotifyPropertyChange("Rating"); } }
+
+        private ObservableCollection<string> mPros;
         [JsonProperty("pros")]
-        public List<string> Pros { get; set; }
+        public ICollection<string> Pros { get { return mPros; } set { mPros = new ObservableCollection<string>(value); NotifyPropertyChange("Pros"); } }
+
+        private ObservableCollection<string> mCons;
         [JsonProperty("cons")]
-        public List<string> Cons { get; set; }
+        public ICollection<string> Cons { get { return mCons; } set { mCons = new ObservableCollection<string>(value); NotifyPropertyChange("Cons"); } }
+
+        private ObservableCollection<Detail> mDetails;
         [JsonProperty("details")]
-        public List<Detail> Details { get; set; }
+        public ICollection<Detail> Details { get { return mDetails; } set { mDetails = new ObservableCollection<Detail>(value); NotifyPropertyChange("Details"); } }
 
         private Image mImage;
-
         public Image GetImage()
         {
             if (mImage != null)
@@ -107,6 +125,11 @@ namespace MyPlaces.Model
             return mImage;
         }
 
+        private void NotifyPropertyChange(string Name)
+        {
+            if (PropertyChanged != null)
+                PropertyChanged.Invoke(this, new PropertyChangedEventArgs(Name));
+        }
         public event PropertyChangedEventHandler PropertyChanged;
     }
 }

@@ -9,22 +9,36 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Newtonsoft.Json;
+using System.ComponentModel;
 
 namespace MyPlaces.Model
 {
     [JsonObject(MemberSerialization.OptIn)]
-    public class Detail
+    public class Detail : INotifyPropertyChanged
     {
-        [JsonProperty("id")]   
-        public long ID { get; set; }
+        private long mID;
+        [JsonProperty("id")]
+        public long ID { get { return mID; } set { mID = value; NotifyPropertyChange("ID"); } }
 
-        [JsonProperty("what")]   
-        public string What { get; set; }
+        private string mWhat;
+        [JsonProperty("what")]
+        public string What { get { return mWhat; } set { mWhat = value; NotifyPropertyChange("What"); } }
 
-        [JsonProperty("text")]   
-        public string Text { get; set; }
+        private string mText;
+        [JsonProperty("text")]
+        public string Text { get { return mText; } set { mText = value; NotifyPropertyChange("Text"); } }
 
-        [JsonProperty("time")]   
-        public DateTime Time { get; set; }
+        private DateTime mTime;
+        [JsonProperty("time")]
+        public DateTime Time { get { return mTime; } set { mTime = value; NotifyPropertyChange("Time"); } }
+
+
+        private void NotifyPropertyChange(string name)
+        {
+            if (PropertyChanged != null)
+                PropertyChanged.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }
