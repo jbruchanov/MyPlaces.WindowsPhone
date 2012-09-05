@@ -12,6 +12,7 @@ using System.Windows.Shapes;
 using MyPlaces.Model;
 using Microsoft.Phone.Tasks;
 using MyPlaces.ViewModel;
+using Coding4Fun.Phone.Controls;
 
 namespace MyPlaces.View
 {
@@ -88,7 +89,10 @@ namespace MyPlaces.View
         public virtual void OnMoreClick()
         {
             if (OpenDetailClick != null)
+            {
                 OpenDetailClick.Invoke(this, new DataEventArgs<MapItem>(mItem));
+                Hide();
+            }
         }
 
         public virtual void OnShareClick()
@@ -111,9 +115,22 @@ namespace MyPlaces.View
 
         public virtual void OnWebButtonClick()
         {
-            WebBrowserTask task = new WebBrowserTask();
-            task.Uri = new Uri(mItem.Web);
-            task.Show();
+            try
+            {
+                WebBrowserTask task = new WebBrowserTask();
+                string url = mItem.Web;
+                if (!url.StartsWith(App.HTTP_PREFIX))
+                    url = App.HTTP_PREFIX + url;
+                task.Uri = new Uri(url);
+                task.Show();
+                Hide();
+            }
+            catch (Exception e)
+            {
+                ToastPrompt tp = new ToastPrompt();
+                tp.Message = e.Message;
+                tp.Show();
+            }
         }
     }
 }

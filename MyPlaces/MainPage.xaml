@@ -24,9 +24,27 @@
         </Grid.RowDefinitions>
 
         <!--TitlePanel contains the name of the application and page title-->
-        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock x:Name="ApplicationTitle" Text="MY APPLICATION" Style="{StaticResource PhoneTextNormalStyle}"/>           
-        </StackPanel>
+        <Grid x:Name="TitlePanel" Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Image Source="/ApplicationIcon.png" />
+            <TextBlock Grid.Column="1" x:Name="ApplicationTitle" VerticalAlignment="Center" Text="My Places" FontSize="36"/>
+            <Button Name="SearchButton" Grid.Column="2">
+                <Button.Content>
+                    <Image Source="/Resources/Icons/AppBarWhite/appbar.feature.search.rest.png" />
+                </Button.Content>
+            </Button>
+            <Button Name="AddButton" Grid.Column="3">
+                <Button.Content>
+                    <Image Source="/Resources/Icons/AppBarWhite/appbar.add.rest.png" />
+                </Button.Content>
+            </Button>
+
+        </Grid>
 
         <!--ContentPanel - place additional content here-->
 

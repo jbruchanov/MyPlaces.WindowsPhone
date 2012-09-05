@@ -36,5 +36,14 @@ namespace MyPlaces
             }
         }
 
+        public static string HTTP_PREFIX
+        {
+
+            get
+            {
+                return "http://";
+            }
+        }
+
     }
 }
