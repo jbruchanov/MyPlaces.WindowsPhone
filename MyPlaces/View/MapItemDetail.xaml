@@ -38,7 +38,7 @@
                         <TextBlock Text="{Binding Source={StaticResource Labels}, Path=Labels.lblCountry}" />
                         <TextBox Name="txtCountry" Text="{Binding Country}"/>
                         <TextBlock Text="{Binding Source={StaticResource Labels}, Path=Labels.lblType}" />
-                        <toolkit:ListPickerItem Name="lpType" />
+                        <toolkit:ListPicker Name="lpType" SelectedItem="{Binding Type}"/>
                         <TextBlock Text="{Binding Source={StaticResource Labels}, Path=Labels.lblContact}" />
                         <TextBox Name="txtContact" Text="{Binding Contact}"/>
                         <TextBlock Text="{Binding Source={StaticResource Labels}, Path=Labels.lblWebLink}" />
@@ -48,9 +48,9 @@
                         <TextBlock Text="{Binding Source={StaticResource Labels}, Path=Labels.lblRating}" />
                         <TextBox Name="txtRating" Text="{Binding Rating}"/>
                         <TextBlock Text="{Binding Source={StaticResource Labels}, Path=Labels.lblLatitude}" />
-                        <TextBox Name="txtLatitude" Text="{Binding Y}"/>
+                        <TextBox Name="txtLatitude" Text="{Binding Y}" IsReadOnly="True"/>
                         <TextBlock Text="{Binding Source={StaticResource Labels}, Path=Labels.lblLongtitude}" />
-                        <TextBox Name="txtLongtitude" Text="{Binding X}"/>
+                        <TextBox Name="txtLongtitude" Text="{Binding X}" IsReadOnly="True"/>
                     </StackPanel>
                 </ScrollViewer>
             </controls:PivotItem>

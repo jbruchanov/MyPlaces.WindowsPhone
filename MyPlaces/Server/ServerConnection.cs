@@ -22,9 +22,11 @@ namespace MyPlaces.Server
         private string mStarsUrl;
         private string mMapItemsUrl;
         private string mMapItemsCoordsUrl;
+        private string mMapItemTypesUrl;
 
         private const string STARS_SUFFIX = "/stars";
         private const string MAPITEMS_SUFFIX = "/mapitems";
+        private const string MAP_ITEM_TYPES_SUFFIX = "/mapitemtypes";
         private const string MAPITEMS_COORDS_SUFFIX = "/{0}/{1}/{2}/{3}";
 
         private const string PUT = "PUT";
@@ -38,6 +40,7 @@ namespace MyPlaces.Server
             mStarsUrl = mServerUrl + STARS_SUFFIX;
             mMapItemsUrl = mServerUrl + MAPITEMS_SUFFIX;
             mMapItemsCoordsUrl = mServerUrl + MAPITEMS_SUFFIX + MAPITEMS_COORDS_SUFFIX;
+            mMapItemTypesUrl = mServerUrl + MAP_ITEM_TYPES_SUFFIX;
         }
 
         /// <summary>
@@ -277,6 +280,34 @@ namespace MyPlaces.Server
                     Callback.Invoke(new DataAsyncResult<MapItem>(mi, e));
                 }
             }), wr);
+        }
+
+        public void GetMapItemTypes(DataAsyncCallback<List<string>> dataAsyncCallback)
+        {
+            WebRequest req = WebRequest.CreateHttp(mMapItemTypesUrl);
+            req.Method = "GET";
+            req.BeginGetResponse(new AsyncCallback(
+                (IAsyncResult result) =>
+                {
+                    List<string> dataResult = null;
+                    Exception err = null;
+                    try
+                    {
+                        WebResponse s = req.EndGetResponse(result);
+                        string json = ReadStreamToEnd(s.GetResponseStream());
+                        s.Close();
+                        dataResult = JsonConvert.DeserializeObject<List<string>>(json);
+                        dataAsyncCallback.Invoke(new DataAsyncResult<List<string>>(dataResult));
+                    }
+                    catch (Exception e)
+                    {
+                        err = e;
+                    }
+                    finally
+                    {
+                        dataAsyncCallback(new DataAsyncResult<List<string>>(dataResult, err));
+                    }
+                }), req);
         }
     }
 

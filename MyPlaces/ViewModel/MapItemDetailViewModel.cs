@@ -12,6 +12,7 @@ using MyPlaces.View;
 using MyPlaces.Server;
 using MyPlaces.Model;
 using Microsoft.Phone.Shell;
+using System.Collections.Generic;
 
 namespace MyPlaces.ViewModel
 {
@@ -30,8 +31,9 @@ namespace MyPlaces.ViewModel
         public MapItemDetailViewModel(MapItemDetail page)
         {
             mPage = page;
-            InitAppBar();
-            Init();
+            mPage.Loaded += (o, e) => { InitAppBar(); Init(); };
+            
+            
         }
 
         private void Init()
@@ -44,10 +46,16 @@ namespace MyPlaces.ViewModel
             }
             else
             {
-                mServerConnection.GetMapItem(mMapItemId, new DataAsyncCallback<Model.MapItem>((r) => { mPage.Dispatcher.BeginInvoke(() => OnDownloadMapItem(r.DataResult)); }));
+                mServerConnection.GetMapItemTypes(new DataAsyncCallback<List<string>>((res) => { mPage.Dispatcher.BeginInvoke(() => OnDownloadMapItemTypes(res.DataResult)); }));
             }
 
             mPage.RootPivot.SelectionChanged += new SelectionChangedEventHandler(RootPivot_SelectionChanged);
+        }
+
+        public virtual void OnDownloadMapItemTypes(List<string> list)
+        {
+            mPage.lpType.ItemsSource = list;
+            mServerConnection.GetMapItem(mMapItemId, new DataAsyncCallback<MapItem>((r) => { mPage.Dispatcher.BeginInvoke(() => OnDownloadMapItem(r.DataResult)); }));
         }
 
         void RootPivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -58,6 +66,8 @@ namespace MyPlaces.ViewModel
 
         private void InitAppBar()
         {
+            if (mPage.ApplicationBar.Buttons.Count != 0)
+                return;
             mDeleteButton = new ApplicationBarIconButton
 	        {
                 IconUri = new Uri("/MyPlaces;component/Resources/Buttons/light/appbar.disk.png", UriKind.Relative),
