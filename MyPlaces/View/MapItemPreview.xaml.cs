@@ -66,6 +66,7 @@ namespace MyPlaces.View
             StreetView.IsEnabled = !String.IsNullOrEmpty(mi.StreetViewLink);
             Phone.IsEnabled = !String.IsNullOrEmpty(mi.Contact);
             Web.IsEnabled = !String.IsNullOrEmpty(mi.Web);
+            Icon.Source = mi.GetImage().Source;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
