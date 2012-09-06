@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using MyPlaces.Model;
 using MyPlaces.Server;
 using Microsoft.Phone.Controls.Maps;
+using MyPlaces.Dialogs;
 
 namespace MyPlaces.ViewModel
 {
@@ -52,6 +53,13 @@ namespace MyPlaces.ViewModel
             mConnection.GetMapItems(new DataAsyncCallback<List<MapItem>>((res) => { mPage.Dispatcher.BeginInvoke(new Action(() => OnLoadMapItems(res.DataResult))); }));
             mPage.MapItemPreview.OpenDetailClick += new EventHandler<DataEventArgs<MapItem>>(MapItemPreview_OpenDetailClick);
             mPage.Map.MouseLeftButtonUp += new MouseButtonEventHandler(OnMapClick);
+            mPage.AddButton.Click += new RoutedEventHandler(OnAddClick);
+        }
+
+        void OnAddClick(object sender, RoutedEventArgs e)
+        {
+            AddMapItemDialog d = new AddMapItemDialog(sender as FrameworkElement);
+            d.Show();
         }
 
         void OnMapClick(object sender, MouseButtonEventArgs e)
