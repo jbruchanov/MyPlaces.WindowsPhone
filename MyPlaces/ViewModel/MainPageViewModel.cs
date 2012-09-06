@@ -13,6 +13,8 @@ using MyPlaces.Model;
 using MyPlaces.Server;
 using Microsoft.Phone.Controls.Maps;
 using MyPlaces.Dialogs;
+using System.Device.Location;
+using System.Threading;
 
 namespace MyPlaces.ViewModel
 {
@@ -25,6 +27,9 @@ namespace MyPlaces.ViewModel
         private MapLayer mSmileysLayer;
         private MapLayer mItemsLayer;
         private Dialog mDialog;
+
+        private GeoCoordinateWatcher mGeoWatcher;
+        private Pushpin mMyLocation;
 
         public MainPageViewModel(MainPage page)
         {
@@ -64,6 +69,58 @@ namespace MyPlaces.ViewModel
             mPage.MapItemPreview.OpenDetailClick += new EventHandler<DataEventArgs<MapItem>>(MapItemPreview_OpenDetailClick);
             mPage.Map.MouseLeftButtonUp += new MouseButtonEventHandler(OnMapClick);
             mPage.AddButton.Click += new RoutedEventHandler(OnAddClick);
+            InitGeoLocation();
+            
+        }
+
+        private void InitGeoLocation()
+        {
+            mPage.MyPosition.Opacity = 0;
+            GeoCoordinateWatcher gw = new GeoCoordinateWatcher(GeoPositionAccuracy.Default);
+            gw.StatusChanged += (o,e) =>
+                {
+                    if (e.Status == GeoPositionStatus.Disabled)
+                    {
+                        if (gw.Permission == GeoPositionPermission.Denied)
+                        {
+                            //no visibility
+                        }
+                        gw.Stop();
+                    }
+                    else if (e.Status == GeoPositionStatus.Ready)
+                    {
+                        mPage.MyPosition.Click += new RoutedEventHandler(MyPosition_Click);
+                        mPage.MyPosition.Opacity = 100;
+                        gw.Stop();
+                    }
+                    
+                };
+            gw.Start();
+        }
+
+        
+        private void MyPosition_Click(object sender, RoutedEventArgs e)
+        {
+            if (mGeoWatcher == null)
+            {
+                mGeoWatcher = new GeoCoordinateWatcher(GeoPositionAccuracy.High);
+                mGeoWatcher.MovementThreshold = 20;
+                mGeoWatcher.PositionChanged += (o, args) =>
+                    {
+                        if (mMyLocation != null)
+                            mPage.Map.Children.Remove(mMyLocation);
+                        mPage.Map.Center = args.Position.Location;
+                        mPage.Map.ZoomLevel = 17;
+                        mMyLocation = new Pushpin { Location = args.Position.Location };
+                        mMyLocation.MouseLeftButtonDown += (src, eargs) => { mPage.Map.Children.Remove((UIElement)src); };
+                        mMyLocation.Foreground = new SolidColorBrush(Colors.Green);
+                        mPage.Map.Children.Add(mMyLocation);
+                        mGeoWatcher.Stop();
+                        mGeoWatcher = null;
+                    };
+                mGeoWatcher.Start();
+            }
+            
         }
 
         
