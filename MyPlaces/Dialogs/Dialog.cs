@@ -15,6 +15,13 @@ namespace MyPlaces.Dialogs
     public class Dialog : UserControl
     {
         private Popup mParent;
+        public bool IsVisible
+        {
+            get
+            {
+                return mParent != null && mParent.IsOpen;
+            }
+        }
         public class DialogEventArgs : EventArgs
         {
             public enum ButtonType

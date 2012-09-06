@@ -24,6 +24,7 @@ namespace MyPlaces.ViewModel
         private ServerConnection mConnection;
         private MapLayer mSmileysLayer;
         private MapLayer mItemsLayer;
+        private Dialog mDialog;
 
         public MainPageViewModel(MainPage page)
         {
@@ -34,10 +35,10 @@ namespace MyPlaces.ViewModel
 
         void OnBackPress(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (mAddMapItemDialog != null)
+            if (mDialog != null)
             {
-                e.Cancel = mAddMapItemDialog.Hide();
-                mAddMapItemDialog = null;
+                e.Cancel = mDialog.Hide();
+                mDialog = null;
                 if(e.Cancel)
                     return;
             }
@@ -65,15 +66,18 @@ namespace MyPlaces.ViewModel
             mPage.AddButton.Click += new RoutedEventHandler(OnAddClick);
         }
 
-        private AddNewItemDialog mAddMapItemDialog;
+        
         void OnAddClick(object sender, RoutedEventArgs e)
         {
-            AddStarDialog asd = new AddStarDialog();
-            asd.Show();
+            ShowDialog(new AddStarDialog());
+        }
 
-            //if(mAddMapItemDialog == null)
-            //    mAddMapItemDialog = new AddNewItemDialog(sender as FrameworkElement);
-            //mAddMapItemDialog.Show();
+        protected void ShowDialog(Dialog d)
+        {
+            if (mDialog != null && mDialog.IsVisible)
+                mDialog.Hide();
+            mDialog = d;
+            mDialog.Show();
         }
 
         void OnMapClick(object sender, MouseButtonEventArgs e)
