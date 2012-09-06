@@ -16,7 +16,7 @@
 		<StaticResource ResourceKey="PhoneForegroundBrush"/>
 	</UserControl.Foreground>
     
-    <Grid x:Name="LayoutRoot" Background="Black" >      
+    <Grid x:Name="LayoutRoot" >      
         <Grid.ColumnDefinitions>
         	<ColumnDefinition Width="Auto" />
         	<ColumnDefinition />
