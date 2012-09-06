@@ -13,12 +13,13 @@
     x:Class="MyPlaces.View.MapItemDetail" 
     mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="696"
     SupportedOrientations="Portrait"  Orientation="Portrait"
-    shell:SystemTray.IsVisible="True">
+    shell:SystemTray.IsVisible="True" Background="Black">
     <phone:PhoneApplicationPage.Resources>
         <res:Res x:Key="Labels" />
         <conv:MapItem2CoordsConverer x:Key="CoordConverter" />
         <Style TargetType="TextBlock">
             <Setter Property="FontSize" Value="22" />
+            <Setter Property="CacheMode" Value="BitmapCache"/>
         </Style>
         <Style x:Key="ListBoxItemStyle1" TargetType="ListBoxItem">
         	<Setter Property="Background" Value="Transparent"/>
@@ -391,12 +392,19 @@
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent" >
         <!--Pivot Control-->
-        <controls:Pivot x:Name="RootPivot" Title="{Binding Labels.lblLoading, Source={StaticResource Labels}}" FontSize="32" Margin="-14,0,14,0">
+        <controls:Pivot x:Name="RootPivot" Title="{Binding Labels.lblLoading, Source={StaticResource Labels}}" FontSize="32">
+        	<controls:Pivot.Background>
+        		<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+        			<GradientStop Color="Black" Offset="1"/>
+        			<GradientStop Color="#FF00AAAD" Offset="0.236"/>
+        			<GradientStop Color="#FF002121" Offset="0.945"/>
+        		</LinearGradientBrush>
+        	</controls:Pivot.Background>
             <!--Pivot item one-->
-            <controls:PivotItem Header="{Binding Labels.lblDetail, Source={StaticResource Labels}}">
+            <controls:PivotItem Header="{Binding Labels.lblDetail, Source={StaticResource Labels}}" Background="Transparent">
                 <ScrollViewer>
                     <StackPanel Orientation="Vertical" DataContext="{Binding MapItem}">
-                        <TextBlock Text="{Binding Labels.lblName, Source={StaticResource Labels}}" />
+                        <TextBlock Text="{Binding Labels.lblName, Source={StaticResource Labels}}" Foreground="White" />
                         <TextBox x:Name="txtName" Text="{Binding Name}" />
                         <TextBlock Text="{Binding Labels.lblStreet, Source={StaticResource Labels}}" />
                         <TextBox x:Name="txtStreet" Text="{Binding Street}"/>
