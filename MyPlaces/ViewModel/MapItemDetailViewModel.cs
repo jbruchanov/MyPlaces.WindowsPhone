@@ -31,6 +31,7 @@ namespace MyPlaces.ViewModel
         private ApplicationBarIconButton mSaveButton;
         private ApplicationBarIconButton mSearchButton;
         private ApplicationBarIconButton mAddButton;
+        private Dialog mDialog;
 
         private Pushpin mPushpin;
 
@@ -71,6 +72,12 @@ namespace MyPlaces.ViewModel
             mPage.RootPivot.SelectionChanged += new SelectionChangedEventHandler(RootPivot_SelectionChanged);
             mPage.Map.MouseLeftButtonDown += new MouseButtonEventHandler(Map_MouseLeftButtonDown);
             mPage.Map.MouseLeftButtonUp += new MouseButtonEventHandler(OnMapClick);
+            mPage.lbContext.SelectionChanged += new SelectionChangedEventHandler(OnSelectionContextChange);
+        }
+
+        protected virtual void OnSelectionContextChange(object sender, SelectionChangedEventArgs e)
+        {
+            mDeleteButton.IsEnabled = e.AddedItems.Count > 0;
         }
 
         private long mMouseLeftButtonDownTime;
@@ -100,7 +107,9 @@ namespace MyPlaces.ViewModel
 
         void RootPivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            mPage.lbContext.SelectedIndex = -1;
             mSearchButton.IsEnabled = mPage.RootPivot.SelectedIndex == 0;
+            mDeleteButton.IsEnabled = mPage.RootPivot.SelectedIndex == 0;
             mAddButton.IsEnabled = mPage.RootPivot.SelectedIndex == 2;
         }
 
@@ -173,8 +182,15 @@ namespace MyPlaces.ViewModel
 
         public virtual void OnAddClick()
         {
-            AddNewContextItemDialog d = new AddNewContextItemDialog();
-            d.Show();
+            ShowDialog(new AddNewContextItemDialog());
+        }
+
+        public void ShowDialog(Dialog d)
+        {
+            if (mDialog != null && mDialog.IsVisible)
+                mDialog.Hide();
+            mDialog = d;
+            mDialog.Show();
         }
 
         public void OnDownloadMapItem(Model.MapItem mapItem)
