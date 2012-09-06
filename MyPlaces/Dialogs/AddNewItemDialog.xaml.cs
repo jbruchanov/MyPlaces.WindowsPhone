@@ -13,18 +13,18 @@ using System.Windows.Controls.Primitives;
 
 namespace MyPlaces.Dialogs
 {
-    public partial class AddMapItemDialog : Dialog
+    public partial class AddNewItemDialog : Dialog
     {
         public event EventHandler<RoutedEventArgs> Click;
         private FrameworkElement mAlignTo;
-        public AddMapItemDialog()
+        public AddNewItemDialog()
         {
             InitializeComponent();
             Star.Click += new RoutedEventHandler(Star_Click);
             MapItem.Click += new RoutedEventHandler(MapItem_Click);
         }
 
-        public AddMapItemDialog(FrameworkElement b)
+        public AddNewItemDialog(FrameworkElement b)
             : this()
         {
             mAlignTo = b;

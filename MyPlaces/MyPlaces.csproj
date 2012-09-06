@@ -87,10 +87,14 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\MapItem2CoordsConverer.cs" />
-    <Compile Include="Dialogs\AddMapItemDialog.xaml.cs">
-      <DependentUpon>AddMapItemDialog.xaml</DependentUpon>
+    <Compile Include="Dialogs\AddNewItemDialog.xaml.cs">
+      <DependentUpon>AddNewItemDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\AddStarDialog.xaml.cs">
+      <DependentUpon>AddStarDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\Dialog.cs" />
+    <Compile Include="Dialogs\ModalDialog.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -124,9 +128,13 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
-    <Page Include="Dialogs\AddMapItemDialog.xaml">
+    <Page Include="Dialogs\AddNewItemDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\AddStarDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="MainPage.xaml">
       <SubType>Designer</SubType>

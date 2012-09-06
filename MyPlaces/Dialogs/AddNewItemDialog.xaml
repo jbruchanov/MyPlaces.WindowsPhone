@@ -1,4 +1,4 @@
-﻿<core:Dialog x:Class="MyPlaces.Dialogs.AddMapItemDialog"
+﻿<core:Dialog x:Class="MyPlaces.Dialogs.AddNewItemDialog"
     xmlns:core="clr-namespace:MyPlaces.Dialogs"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"

@@ -1,0 +1,98 @@
+﻿<core:ModalDialog xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"  x:Class="MyPlaces.Dialogs.AddStarDialog"
+    xmlns:core="clr-namespace:MyPlaces.Dialogs"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    d:DesignHeight="800" d:DesignWidth="480">
+    <core:ModalDialog.Resources>
+
+    </core:ModalDialog.Resources>
+
+    <Grid x:Name="LayoutRoot">
+        <Grid.Background>
+            <SolidColorBrush Color="Black" Opacity="0.5" />
+        </Grid.Background>
+        <Border Name="ContentPanel" BorderBrush="White" BorderThickness="3" Margin="5" Background="Black" VerticalAlignment="Center">
+            <Grid Margin="5" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="Choose star icon" Grid.Row="0" FontSize="36" />
+                <Line X1="0" X2="480" Grid.Row="1" StrokeThickness="2" Stroke="White"/>
+                <Grid Grid.Row="2" HorizontalAlignment="Center">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button >
+                            <Button.Content>
+                                <Image Source="/Resources/Images/ico_star.png" Stretch="None" />
+                            </Button.Content>
+                        </Button>
+                        <Button>
+                            <Button.Content>
+                                <Image Source="/Resources/Images/ico_cafe.png" Stretch="None" />
+                            </Button.Content>
+                        </Button>
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Orientation="Horizontal">
+                        <Button >
+                            <Button.Content>
+                                <Image Source="/Resources/Images/ico_drink.png" Stretch="None" />
+                            </Button.Content>
+                        </Button>
+                        <Button>
+                            <Button.Content>
+                                <Image Source="/Resources/Images/ico_wine.png" Stretch="None" />
+                            </Button.Content>
+                        </Button>
+                        <Button>
+                            <Button.Content>
+                                <Image Source="/Resources/Images/ico_search.png" Stretch="None" />
+                            </Button.Content>
+                        </Button>
+                    </StackPanel>
+                    <StackPanel Grid.Row="2" Orientation="Horizontal">
+                        <Button >
+                            <Button.Content>
+                                <Image Source="/Resources/Images/ico_smile_happy.png" Stretch="None" />
+                            </Button.Content>
+                        </Button>
+                        <Button>
+                            <Button.Content>
+                                <Image Source="/Resources/Images/ico_smile_lick.png" Stretch="None" />
+                            </Button.Content>
+                        </Button>
+                        <Button>
+                            <Button.Content>
+                                <Image Source="/Resources/Images/ico_smile_neutral.png" Stretch="None" />
+                            </Button.Content>
+                        </Button>
+                    </StackPanel>
+                    <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button >
+                            <Button.Content>
+                                <Image Source="/Resources/Images/ico_smile_unhappy.png" Stretch="None" />
+                            </Button.Content>
+                        </Button>
+                        <Button>
+                            <Button.Content>
+                                <Image Source="/Resources/Images/ico_smile_veryhappy.png" Stretch="None" />
+                            </Button.Content>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</core:ModalDialog>

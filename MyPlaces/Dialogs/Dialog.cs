@@ -37,10 +37,15 @@ namespace MyPlaces.Dialogs
             mParent.IsOpen = true;
         }
 
-        public virtual void Hide()
+        public virtual bool Hide()
         {
+            bool result = false;
             if (mParent != null)
+            {
+                result = mParent.IsOpen;
                 mParent.IsOpen = false;
+            }
+            return result;
         }
 
         protected Popup GetPopup()

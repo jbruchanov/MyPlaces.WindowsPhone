@@ -34,11 +34,20 @@ namespace MyPlaces.ViewModel
 
         void OnBackPress(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            if (mAddMapItemDialog != null)
+            {
+                e.Cancel = mAddMapItemDialog.Hide();
+                mAddMapItemDialog = null;
+                if(e.Cancel)
+                    return;
+            }
             if (mPage.MapItemPreview.IsVisible)
             {
                 mPage.MapItemPreview.Hide();
                 e.Cancel = true;
+                return;
             }
+            
         }
 
         private void Init()
@@ -56,10 +65,15 @@ namespace MyPlaces.ViewModel
             mPage.AddButton.Click += new RoutedEventHandler(OnAddClick);
         }
 
+        private AddNewItemDialog mAddMapItemDialog;
         void OnAddClick(object sender, RoutedEventArgs e)
         {
-            AddMapItemDialog d = new AddMapItemDialog(sender as FrameworkElement);
-            d.Show();
+            AddStarDialog asd = new AddStarDialog();
+            asd.Show();
+
+            //if(mAddMapItemDialog == null)
+            //    mAddMapItemDialog = new AddNewItemDialog(sender as FrameworkElement);
+            //mAddMapItemDialog.Show();
         }
 
         void OnMapClick(object sender, MouseButtonEventArgs e)
