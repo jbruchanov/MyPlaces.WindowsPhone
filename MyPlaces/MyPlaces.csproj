@@ -93,6 +93,9 @@
     <Compile Include="Dialogs\AddStarDialog.xaml.cs">
       <DependentUpon>AddStarDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\AddNewContextItemDialog.xaml.cs">
+      <DependentUpon>AddNewContextItemDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\Dialog.cs" />
     <Compile Include="Dialogs\ModalDialog.cs" />
     <Compile Include="MainPage.xaml.cs">
@@ -133,6 +136,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Dialogs\AddStarDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\AddNewContextItemDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

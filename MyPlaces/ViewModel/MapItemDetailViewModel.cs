@@ -15,6 +15,7 @@ using Microsoft.Phone.Shell;
 using System.Collections.Generic;
 using System.Device.Location;
 using Microsoft.Phone.Controls.Maps;
+using MyPlaces.Dialogs;
 
 namespace MyPlaces.ViewModel
 {
@@ -172,7 +173,8 @@ namespace MyPlaces.ViewModel
 
         public virtual void OnAddClick()
         {
-
+            AddNewContextItemDialog d = new AddNewContextItemDialog();
+            d.Show();
         }
 
         public void OnDownloadMapItem(Model.MapItem mapItem)
