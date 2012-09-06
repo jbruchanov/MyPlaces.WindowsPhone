@@ -7,7 +7,7 @@
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"            
-    d:DesignHeight="200" d:DesignWidth="480">
+    d:DesignHeight="200" d:DesignWidth="480" BorderThickness="0">
 	<UserControl.Resources>
         <DoubleAnimation x:Key="HideAnimation"
 				Storyboard.TargetProperty="Opacity" From="1.0" To="0"
@@ -133,54 +133,58 @@
 			</Setter>
 		</Style>
 	</UserControl.Resources>
-    <Grid x:Name="LayoutRoot" Margin="5,0,5,0">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="400*" />
-            <ColumnDefinition Width="80*" />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <TextBlock Name="PlaceName" Text="Mc Donald" FontSize="36" Grid.Row="0" Grid.ColumnSpan="2" />
-        <TextBlock Name="PlaceLocation" Text="Orange Street 123" FontSize="22" Foreground="LightGray" Grid.Row="1" TextWrapping="Wrap" />
-        <Grid  Grid.Row="2" Grid.ColumnSpan="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <Button Name="StreetView" Grid.Column="0" Style="{StaticResource ButtonStyle}" Click="Button_Click">
-                <Button.Content>
-                    <Image Source="/MyPlaces;component/Resources/Buttons/dark/appbar.eye.png" Stretch="Uniform" />
-                </Button.Content>
-            </Button>
-            <Button Name="Web" Grid.Column="1" Style="{StaticResource ButtonStyle}" Click="Button_Click">
-                <Button.Content>
-                    <Image Source="/MyPlaces;component/Resources/Buttons/dark/appbar.globe.png" Stretch="Uniform" />
-                </Button.Content>
-            </Button>
-            <Button Name="Phone" Grid.Column="2" Style="{StaticResource ButtonStyle}" Click="Button_Click">
-                <Button.Content>
-                    <Image Source="/MyPlaces;component/Resources/Buttons/dark/appbar.phone.png" Stretch="Uniform" />
-                </Button.Content>
-            </Button>
-            <Button Name="Share" Grid.Column="3" Style="{StaticResource ButtonStyle}" Click="Button_Click">
-                <Button.Content>
-                    <Image Source="/MyPlaces;component/Resources/Buttons/dark/appbar.share.png" Stretch="Uniform" />
-                </Button.Content>
-            </Button>
-            <Button Name="More" Grid.Column="4" Style="{StaticResource ButtonStyle}" Click="Button_Click">
-                <Button.Content>
-                    <Image Source="/MyPlaces;component/Resources/Buttons/dark/appbar.edit.png" Stretch="Uniform" />
-                </Button.Content>
-            </Button>   
-        </Grid>
+	<UserControl.Background>
+		<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+			<GradientStop Color="Black" Offset="0"/>
+			<GradientStop Color="White" Offset="1"/>
+		</LinearGradientBrush>
+	</UserControl.Background>
+    <Border Margin="0" Padding="0" BorderThickness="0">
+    	<Border.Background>
+    		<LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+    			<GradientStop Color="Black" Offset="1"/>
+    			<GradientStop Color="#FF4E4E4E"/>
+    		</LinearGradientBrush>
+    	</Border.Background>
+		<Grid x:Name="LayoutRoot" Margin="5">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="400*" />
+				<ColumnDefinition Width="80*" />
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="*" />
+				<RowDefinition Height="Auto"/>
+			</Grid.RowDefinitions>
+			<TextBlock x:Name="PlaceName" Text="Mc Donald" FontSize="36" Grid.Row="0" Grid.ColumnSpan="2" />
+			<TextBlock x:Name="PlaceLocation" Text="Orange Street 123" FontSize="22" Foreground="LightGray" Grid.Row="1" TextWrapping="Wrap" />
+			<Grid  Grid.Row="2" Grid.ColumnSpan="2">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition />
+					<ColumnDefinition />
+					<ColumnDefinition />
+					<ColumnDefinition />
+					<ColumnDefinition />
+				</Grid.ColumnDefinitions>
+				<Button x:Name="StreetView" Grid.Column="0" Style="{StaticResource ButtonStyle}" Click="Button_Click">
+					<Image Source="/MyPlaces;component/Resources/Buttons/dark/appbar.eye.png" Stretch="Uniform" />
+				</Button>
+				<Button x:Name="Web" Grid.Column="1" Style="{StaticResource ButtonStyle}" Click="Button_Click">
+					<Image Source="/MyPlaces;component/Resources/Buttons/dark/appbar.globe.png" Stretch="Uniform" />
+				</Button>
+				<Button x:Name="Phone" Grid.Column="2" Style="{StaticResource ButtonStyle}" Click="Button_Click">
+					<Image Source="/MyPlaces;component/Resources/Buttons/dark/appbar.phone.png" Stretch="Uniform" />
+				</Button>
+				<Button x:Name="Share" Grid.Column="3" Style="{StaticResource ButtonStyle}" Click="Button_Click">
+					<Image Source="/MyPlaces;component/Resources/Buttons/dark/appbar.share.png" Stretch="Uniform" />
+				</Button>
+				<Button x:Name="More" Grid.Column="4" Style="{StaticResource ButtonStyle}" Click="Button_Click">
+					<Image Source="/MyPlaces;component/Resources/Buttons/dark/appbar.edit.png" Stretch="Uniform" />
+				</Button>   
+			</Grid>
        
-        <Image Grid.Column="1" Grid.Row="1" Name="Icon" Stretch="Uniform" Source="/Resources/Images/ico_beer.png" />
-        <Button Grid.Column="1" Name="Close" Style="{StaticResource CloseButton}"  Margin="45,-2,0,59" Grid.RowSpan="2" Click="Close_Click" />
-    </Grid>
+			<Image Grid.Column="1" Grid.Row="1" x:Name="Icon" Stretch="Uniform" Source="/Resources/Images/ico_beer.png" />
+			<Button Grid.Column="1" x:Name="Close" Style="{StaticResource CloseButton}"  Margin="45,-2,0,59" Grid.RowSpan="2" Click="Close_Click" />
+		</Grid>
+	</Border>
 </UserControl>
