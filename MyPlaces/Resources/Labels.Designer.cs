@@ -88,6 +88,15 @@ namespace MyPlaces.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string lblCancel {
+            get {
+                return ResourceManager.GetString("lblCancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to City.
         /// </summary>
         public static string lblCity {
@@ -201,6 +210,15 @@ namespace MyPlaces.Resources {
         public static string lblName {
             get {
                 return ResourceManager.GetString("lblName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OK.
+        /// </summary>
+        public static string lblOK {
+            get {
+                return ResourceManager.GetString("lblOK", resourceCulture);
             }
         }
         

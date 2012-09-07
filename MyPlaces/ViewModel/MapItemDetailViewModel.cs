@@ -260,7 +260,31 @@ namespace MyPlaces.ViewModel
 
         public virtual void OnAddClick()
         {
-            ShowDialog(new AddNewContextItemDialog());
+            AddNewContextItemDialog adci = new AddNewContextItemDialog();
+            adci.Click += (o,e) =>
+                {
+                    if (e.Type == AddNewContextItemDialog.ContextItemType.Pro)
+                    {
+                        SimpleContextDialog scd = new SimpleContextDialog();
+                        scd.OKClick += (src, eargs) =>
+                            {
+                                ShowToast(eargs.Value);
+                            };
+                        ShowDialog(scd);
+                    }
+                    else if (e.Type == AddNewContextItemDialog.ContextItemType.Con)
+                    {
+                        SimpleContextDialog scd = new SimpleContextDialog(SimpleContextDialog.SimpleContextType.Con);
+                        scd.OKClick += (src, eargs) =>
+                        {
+                            ShowToast(eargs.Value);
+                        };
+                        ShowDialog(scd);
+                    }
+                    else
+                        ShowToast("//TODO");
+                };
+            ShowDialog(adci);
         }
 
         public void ShowDialog(Dialog d)

@@ -15,7 +15,13 @@ namespace MyPlaces.Dialogs
 {
     public partial class AddNewContextItemDialog : ModalDialog
     {
-        public event EventHandler<RoutedEventArgs> Click;
+
+        public enum ContextItemType
+        {
+            Pro,Con,Detail
+        }
+
+        public event EventHandler<AddNewContextItemDialogEventArgs> Click;
         public AddNewContextItemDialog()
         {
             InitializeComponent();
@@ -27,22 +33,32 @@ namespace MyPlaces.Dialogs
         void Detail_Click(object sender, RoutedEventArgs e)
         {
             if (Click != null)
-                Click.Invoke(this, e);
+                Click.Invoke(this, new AddNewContextItemDialogEventArgs(ContextItemType.Detail));
             Hide();
         }
 
         void Minus_Click(object sender, RoutedEventArgs e)
         {
             if (Click != null)
-                Click.Invoke(this, e);
+                Click.Invoke(this, new AddNewContextItemDialogEventArgs(ContextItemType.Con));
             Hide();
         }
 
         void Star_Click(object sender, RoutedEventArgs e)
         {
             if (Click != null)
-                Click.Invoke(this, e);
+                Click.Invoke(this, new AddNewContextItemDialogEventArgs(ContextItemType.Pro));
             Hide();
+        }
+
+        public class AddNewContextItemDialogEventArgs : EventArgs
+        {
+            public ContextItemType Type { get; private set; }
+
+            public AddNewContextItemDialogEventArgs(ContextItemType type)
+            {
+                Type = type;
+            }
         }
     }
 }
