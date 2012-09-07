@@ -16,6 +16,11 @@ using System.Collections.Generic;
 using System.Device.Location;
 using Microsoft.Phone.Controls.Maps;
 using MyPlaces.Dialogs;
+using Coding4Fun.Phone.Controls;
+using MyPlaces.Resources;
+using System.Threading;
+using MyPlaces.GeocodeService;
+using System.Collections.ObjectModel;
 
 namespace MyPlaces.ViewModel
 {
@@ -78,7 +83,7 @@ namespace MyPlaces.ViewModel
         protected virtual void OnSelectionContextChange(object sender, SelectionChangedEventArgs e)
         {
             mDeleteButton.IsEnabled = e.AddedItems.Count > 0;
-        }
+        }   
 
         private long mMouseLeftButtonDownTime;
         void Map_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -108,7 +113,7 @@ namespace MyPlaces.ViewModel
         void RootPivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             mPage.lbContext.SelectedIndex = -1;
-            mSearchButton.IsEnabled = mPage.RootPivot.SelectedIndex == 0;
+            mSearchButton.IsEnabled = mPage.RootPivot.SelectedIndex != 2;
             mDeleteButton.IsEnabled = mPage.RootPivot.SelectedIndex == 0;
             mAddButton.IsEnabled = mPage.RootPivot.SelectedIndex == 2;
         }
@@ -172,7 +177,80 @@ namespace MyPlaces.ViewModel
 
         public virtual void OnSearchClick()
         {
+            if (mPushpin != null)
+            {
+                if (mPage.RootPivot.SelectedIndex != 0)
+                    mPage.RootPivot.SelectedIndex = 0;
+                OnLocationSearch(mPushpin.Location.Longitude, mPushpin.Location.Latitude);
+            }
+            else
+            {
+                ToastPrompt tp = new ToastPrompt();
+                tp.Message = Labels.errSelectPlaceOnMap;
+                tp.Show();
+            }
+        }
 
+        protected virtual void OnLocationSearch(double x, double y)
+        {
+            try
+            {
+                mSearchButton.IsEnabled = false;
+                GeocodeServiceClient c = new GeocodeServiceClient("BasicHttpBinding_IGeocodeService");
+                ReverseGeocodeRequest r = new ReverseGeocodeRequest();
+                r.Location = new Microsoft.Phone.Controls.Maps.Platform.Location() { Longitude = x, Latitude = y };
+                r.Credentials = new Credentials();
+                r.Credentials.ApplicationId = "AvSVwNylWZFgFYUZ7OathJMmY1L2Gd4bObRisS0vNvrAObiscGbb7n45oMgXi5bv";
+                c.ReverseGeocodeCompleted += new EventHandler<ReverseGeocodeCompletedEventArgs>(OnReverseGeocode);
+                c.ReverseGeocodeAsync(r);
+            }
+            catch (Exception e)
+            {
+                ShowToast(e.Message);
+                mSearchButton.IsEnabled = true;
+            }
+        }
+
+        protected virtual void OnReverseGeocode(object sender, ReverseGeocodeCompletedEventArgs e)
+        {
+            mSearchButton.IsEnabled = true;
+            if (e.Error != null)
+            {
+                ShowToast(e.Error.Message);
+                return;
+            }
+
+            if (e.Result.ResponseSummary.StatusCode == ResponseStatusCode.Success)
+            {
+                ObservableCollection<GeocodeResult> results = e.Result.Results;
+                if (results.Count == 1)
+                {
+                    GeocodeResult res = results[0];
+                    string street = res.Address.AddressLine;
+                    string city = res.Address.Locality;
+                    string country = res.Address.CountryRegion;
+
+                    mPage.txtStreet.Text = street;
+                    mPage.txtCity.Text = city;
+                    mPage.txtCountry.Text = country;
+                    ShowToast(res.Address.FormattedAddress, Labels.lblFound);
+                }
+                else
+                {
+                    ShowToast("Too many resultst //TODO!");
+                }
+            }
+            else
+                ShowToast(e.Result.ResponseSummary.FaultReason);
+        }
+
+        private void ShowToast(string msg, string title = "")
+        {
+            ToastPrompt tp = new ToastPrompt();
+            tp.Title = title;
+            tp.Message = msg;
+            tp.TextWrapping = TextWrapping.Wrap;
+            tp.Show();
         }
 
         public virtual void OnDeleteClick()

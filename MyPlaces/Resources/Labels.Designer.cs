@@ -61,6 +61,15 @@ namespace MyPlaces.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select place on map!.
+        /// </summary>
+        public static string errSelectPlaceOnMap {
+            get {
+                return ResourceManager.GetString("errSelectPlaceOnMap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add.
         /// </summary>
         public static string lblAdd {
@@ -129,6 +138,15 @@ namespace MyPlaces.Resources {
         public static string lblDetail {
             get {
                 return ResourceManager.GetString("lblDetail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Found.
+        /// </summary>
+        public static string lblFound {
+            get {
+                return ResourceManager.GetString("lblFound", resourceCulture);
             }
         }
         

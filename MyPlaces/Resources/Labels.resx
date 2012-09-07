@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="errSelectPlaceOnMap" xml:space="preserve">
+    <value>Select place on map!</value>
+  </data>
   <data name="lblAdd" xml:space="preserve">
     <value>Add</value>
   </data>
@@ -140,6 +143,9 @@
   </data>
   <data name="lblDetail" xml:space="preserve">
     <value>Detail</value>
+  </data>
+  <data name="lblFound" xml:space="preserve">
+    <value>Found</value>
   </data>
   <data name="lblLatitude" xml:space="preserve">
     <value>Latitude</value>

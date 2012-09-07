@@ -113,6 +113,11 @@
     </Compile>
     <Compile Include="Resources\Res.cs" />
     <Compile Include="Server\ServerConnection.cs" />
+    <Compile Include="Service References\GeocodeService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\DataEventArgs.cs" />
     <Compile Include="ViewModel\MainPageViewModel.cs" />
     <Compile Include="ViewModel\MapItemDetailViewModel.cs" />
@@ -163,6 +168,27 @@
   <ItemGroup>
     <None Include="Properties\AppManifest.xml" />
     <None Include="Properties\WMAppManifest.xml" />
+    <None Include="Service References\GeocodeService\Arrays.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\GeocodeService\common.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\GeocodeService\contracts.wsdl" />
+    <None Include="Service References\GeocodeService\contracts.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\GeocodeService\geocode.wsdl" />
+    <None Include="Service References\GeocodeService\geocode.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\GeocodeService\MyPlaces.GeocodeService.GeocodeResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\GeocodeService\service.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="ServiceReferences.ClientConfig" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ApplicationIcon.png">
@@ -540,6 +566,12 @@
     <Content Include="Resources\Images\ic_web.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Service References\GeocodeService\configuration91.svcinfo" />
+    <None Include="Service References\GeocodeService\configuration.svcinfo" />
+    <None Include="Service References\GeocodeService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="SplashScreenImage.jpg" />
   </ItemGroup>
   <ItemGroup>
@@ -547,6 +579,12 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Labels.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\GeocodeService\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
