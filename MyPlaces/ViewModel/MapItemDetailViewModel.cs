@@ -26,6 +26,9 @@ namespace MyPlaces.ViewModel
 {
     public class MapItemDetailViewModel
     {
+        private const string SEARCH_ICON = "/Resources/Icons/AppBarWhite/appbar.feature.search.rest.png";
+        private const string EDIT_ICON = "/Resources/Icons/AppBarWhite/appbar.edit.rest.png";
+
         private MapItemDetail mPage;
         private ServerConnection mServerConnection;
         private string mMapItemId;
@@ -34,7 +37,7 @@ namespace MyPlaces.ViewModel
 
         private ApplicationBarIconButton mDeleteButton;
         private ApplicationBarIconButton mSaveButton;
-        private ApplicationBarIconButton mSearchButton;
+        private ApplicationBarIconButton mSearchEditButton;
         private ApplicationBarIconButton mAddButton;
         private Dialog mDialog;
 
@@ -82,7 +85,9 @@ namespace MyPlaces.ViewModel
 
         protected virtual void OnSelectionContextChange(object sender, SelectionChangedEventArgs e)
         {
-            mDeleteButton.IsEnabled = e.AddedItems.Count > 0;
+            bool b = e.AddedItems.Count > 0;
+            mSearchEditButton.IsEnabled = b;
+            mDeleteButton.IsEnabled = b;
         }   
 
         private long mMouseLeftButtonDownTime;
@@ -113,7 +118,16 @@ namespace MyPlaces.ViewModel
         void RootPivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             mPage.lbContext.SelectedIndex = -1;
-            mSearchButton.IsEnabled = mPage.RootPivot.SelectedIndex != 2;
+            if (mPage.RootPivot.SelectedIndex == 2)
+            {
+                mSearchEditButton.IconUri = new Uri(EDIT_ICON, UriKind.RelativeOrAbsolute);
+                mSearchEditButton.IsEnabled = false;
+            }
+            else
+            {
+                mSearchEditButton.IconUri = new Uri(SEARCH_ICON, UriKind.RelativeOrAbsolute);
+                mSearchEditButton.IsEnabled = true;
+            }
             mDeleteButton.IsEnabled = mPage.RootPivot.SelectedIndex == 0;
             mAddButton.IsEnabled = mPage.RootPivot.SelectedIndex == 2;
         }
@@ -130,13 +144,13 @@ namespace MyPlaces.ViewModel
             mDeleteButton.Click += new EventHandler(OnApplicationBarButtonClick);
             mPage.ApplicationBar.Buttons.Add(mDeleteButton);
 
-            mSearchButton = new ApplicationBarIconButton
+            mSearchEditButton = new ApplicationBarIconButton
             {
-                IconUri = new Uri("/Resources/Icons/AppBarWhite/appbar.feature.search.rest.png", UriKind.RelativeOrAbsolute),
+                IconUri = new Uri(SEARCH_ICON, UriKind.RelativeOrAbsolute),
                 Text = Resources.Labels.lblSearch
             };
-            mSearchButton.Click += new EventHandler(OnApplicationBarButtonClick);
-            mPage.ApplicationBar.Buttons.Add(mSearchButton);
+            mSearchEditButton.Click += new EventHandler(OnApplicationBarButtonClick);
+            mPage.ApplicationBar.Buttons.Add(mSearchEditButton);
 
             mAddButton = new ApplicationBarIconButton
             {
@@ -164,8 +178,13 @@ namespace MyPlaces.ViewModel
                 OnAddClick();
             else if (mDeleteButton == sender)
                 OnDeleteClick();
-            else if (mSearchButton == sender)
-                OnSearchClick();
+            else if (mSearchEditButton == sender)
+            {
+                if (mPage.RootPivot.SelectedIndex == 2)
+                    OnEditContextClick();
+                else
+                    OnSearchClick();
+            }
             else if (mSaveButton == sender)
                 OnSaveClick();
         }
@@ -175,6 +194,10 @@ namespace MyPlaces.ViewModel
 
         }
 
+        public virtual void OnEditContextClick()
+        {
+
+        }
         public virtual void OnSearchClick()
         {
             if (mPushpin != null)
@@ -195,7 +218,7 @@ namespace MyPlaces.ViewModel
         {
             try
             {
-                mSearchButton.IsEnabled = false;
+                mSearchEditButton.IsEnabled = false;
                 GeocodeServiceClient c = new GeocodeServiceClient("BasicHttpBinding_IGeocodeService");
                 ReverseGeocodeRequest r = new ReverseGeocodeRequest();
                 r.Location = new Microsoft.Phone.Controls.Maps.Platform.Location() { Longitude = x, Latitude = y };
@@ -207,13 +230,13 @@ namespace MyPlaces.ViewModel
             catch (Exception e)
             {
                 ShowToast(e.Message);
-                mSearchButton.IsEnabled = true;
+                mSearchEditButton.IsEnabled = true;
             }
         }
 
         protected virtual void OnReverseGeocode(object sender, ReverseGeocodeCompletedEventArgs e)
         {
-            mSearchButton.IsEnabled = true;
+            mSearchEditButton.IsEnabled = true;
             if (e.Error != null)
             {
                 ShowToast(e.Error.Message);
