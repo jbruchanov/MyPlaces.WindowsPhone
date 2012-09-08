@@ -225,8 +225,7 @@ namespace MyPlaces.Server
                         s.Close();
                         List<MapItem> subResult = JsonConvert.DeserializeObject<List<MapItem>>(json);
                         if (subResult.Count == 1)
-                            dataResult = subResult[0];
-                        dataAsyncCallback.Invoke(new DataAsyncResult<MapItem>(dataResult));
+                            dataResult = subResult[0];                       
                     }
                     catch (Exception e)
                     {
@@ -296,8 +295,7 @@ namespace MyPlaces.Server
                         WebResponse s = req.EndGetResponse(result);
                         string json = ReadStreamToEnd(s.GetResponseStream());
                         s.Close();
-                        dataResult = JsonConvert.DeserializeObject<List<string>>(json);
-                        dataAsyncCallback.Invoke(new DataAsyncResult<List<string>>(dataResult));
+                        dataResult = JsonConvert.DeserializeObject<List<string>>(json);                        
                     }
                     catch (Exception e)
                     {
