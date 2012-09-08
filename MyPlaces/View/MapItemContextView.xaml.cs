@@ -28,10 +28,27 @@ namespace MyPlaces.View
             InitializeComponent();
 
             mMapItemContextItem = value;
+            mMapItemContextItem.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(mMapItemContextItem_PropertyChanged);
             if (value.Type == ContextItemType.Detail)
                 SetValue(value.Detail);
             else
                 SetValue(value.Value, value.Type);
+        }
+
+        private void mMapItemContextItem_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            MapItemContextItem mci = sender as MapItemContextItem;
+            if(mci != null)
+            {
+                if (e.PropertyName.Equals("Value"))
+                    ContentTop.Text = mci.Value;
+                else if (e.PropertyName.Equals("Detail"))
+                {
+                    ContentTop.Text = mci.Detail.What;
+                    ContentBottom.Text = mci.Detail.Text;
+                }
+            }
+            
         }
 
         private void SetValue(string value, ContextItemType type)
@@ -51,6 +68,7 @@ namespace MyPlaces.View
             Icon.Source = new BitmapImage(new Uri(DETAIL_IMG, UriKind.RelativeOrAbsolute));
             ContentTop.Text = value.What;
             ContentBottom.Text = value.Text;
+            
         }
 
         public MapItemContextItem GetValue()

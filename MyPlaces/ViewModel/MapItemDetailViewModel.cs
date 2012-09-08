@@ -84,7 +84,10 @@ namespace MyPlaces.ViewModel
             mPage.Map.MouseLeftButtonDown += new MouseButtonEventHandler(Map_MouseLeftButtonDown);
             mPage.Map.MouseLeftButtonUp += new MouseButtonEventHandler(OnMapClick);
             mPage.lbContext.SelectionChanged += new SelectionChangedEventHandler(OnSelectionContextChange);
+            mPage.BackKeyPress += new EventHandler<System.ComponentModel.CancelEventArgs>(OnBackKeyPress);
         }
+
+        
 
         private void InitAppBar()
         {
@@ -220,6 +223,16 @@ namespace MyPlaces.ViewModel
             mAddButton.IsEnabled = mPage.RootPivot.SelectedIndex == 2;
         }
 
+        private void OnBackKeyPress(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (mDialog != null && mDialog.IsVisible)
+            {
+                mDialog.Hide();
+                mDialog = null;
+                e.Cancel = true;
+            }
+        }
+
         #endregion
 
         #region LocationService
@@ -330,12 +343,13 @@ namespace MyPlaces.ViewModel
 
         protected virtual void OnCloseContextItemDialog(MapItemContextItem oldItem, Detail newValue)
         {
-
+            ///update is not neccessary, becuase it's already updated by property change handlers, cause detail is ref type
         }
 
         protected virtual void OnCloseContextItemDialog(MapItemContextItem oldItem, string newValue)
         {
-
+            //must be, becase string is value type!
+            oldItem.Value = newValue;
         }
 
         public virtual void OnSearchClick()
@@ -364,35 +378,58 @@ namespace MyPlaces.ViewModel
             AddNewContextItemDialog adci = new AddNewContextItemDialog();
             adci.Click += (o, e) =>
             {
-                if (e.Type == AddNewContextItemDialog.ContextItemType.Pro)
+                if (e.Type == ContextItemType.Pro)
                 {
                     SimpleContextDialog scd = new SimpleContextDialog();
                     scd.OKClick += (src, eargs) =>
                     {
-                        ShowToast(eargs.Value);
+                        OnAddPro(eargs.Value);
                     };
                     ShowDialog(scd);
                 }
-                else if (e.Type == AddNewContextItemDialog.ContextItemType.Con)
+                else if (e.Type == ContextItemType.Con)
                 {
                     SimpleContextDialog scd = new SimpleContextDialog(ContextItemType.Con);
                     scd.OKClick += (src, eargs) =>
                     {
-                        ShowToast(eargs.Value);
+                        OnAddCon(eargs.Value);
                     };
                     ShowDialog(scd);
                 }
-                else
-                    ShowToast("//TODO");
+                else if (e.Type == ContextItemType.Detail)
+                {
+                    DetailContextDialog dcc = new DetailContextDialog();
+                    dcc.OKClick += (src, eargs) =>
+                        {
+                            OnAddDetail(eargs.Value);
+                        };
+                    ShowDialog(dcc);
+                }
+                    
             };
             ShowDialog(adci);
         }
 
         #region DialogHandlers
-        public void OnAddPro(string value)
+        public virtual void OnAddPro(string value)
         {
-            mContextItems.Add(new MapItemContextItem(ContextItemType.Pro,value));
-            
+            MapItemContextItem mici = new MapItemContextItem(ContextItemType.Pro, value);
+            mContextItems.Add(mici);
+            ContextItemViews.Add(new MapItemContextView(mici));
+        }
+
+        public virtual void OnAddCon(string value)
+        {
+            MapItemContextItem mici = new MapItemContextItem(ContextItemType.Con, value);
+            mContextItems.Add(mici);
+            ContextItemViews.Add(new MapItemContextView(mici));
+        }
+
+        public virtual void OnAddDetail(Detail value)
+        {
+            MapItemContextItem mici = new MapItemContextItem(value);
+            mContextItems.Add(mici);
+            ContextItemViews.Add(new MapItemContextView(mici));
         }
         #endregion
 

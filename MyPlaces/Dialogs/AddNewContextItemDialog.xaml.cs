@@ -16,11 +16,6 @@ namespace MyPlaces.Dialogs
     public partial class AddNewContextItemDialog : ModalDialog
     {
 
-        public enum ContextItemType
-        {
-            Pro,Con,Detail
-        }
-
         public event EventHandler<AddNewContextItemDialogEventArgs> Click;
         public AddNewContextItemDialog()
         {

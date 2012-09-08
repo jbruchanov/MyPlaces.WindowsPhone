@@ -13,11 +13,14 @@ using System.ComponentModel;
 
 namespace MyPlaces.Model
 {
-    public class MapItemContextItem
+    public class MapItemContextItem : INotifyPropertyChanged
     {
         public ContextItemType Type { get; private set; }
-        public Detail Detail { get; private set; }
-        public string Value { get; private set; }
+        private Detail mDetail;
+        private string mValue;
+
+        public Detail Detail { get { return mDetail; } set { mDetail = value; NotifyChange("Detail"); } }
+        public string Value { get { return mValue; } set { mValue = value; NotifyChange("Value"); } }
 
         public MapItemContextItem(ContextItemType type, string value)
         {
@@ -28,6 +31,7 @@ namespace MyPlaces.Model
         public MapItemContextItem(Detail detail)
         {
             Detail = detail;
+            Detail.PropertyChanged += (o, e) => NotifyChange("Detail");
             Type = ContextItemType.Detail;
         }
 
@@ -45,6 +49,14 @@ namespace MyPlaces.Model
                 result = scd;
             }
             return result;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void NotifyChange(string name)
+        {
+            if (PropertyChanged != null)
+                PropertyChanged.Invoke(this, new PropertyChangedEventArgs(name));
         }
     }
 }
