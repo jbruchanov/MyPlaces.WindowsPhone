@@ -24,7 +24,7 @@ namespace MyPlaces.Dialogs
         public event EventHandler<SimpleContextTypeEventArgs> OKClick;
         private SimpleContextType mType;
 
-        public SimpleContextDialog(SimpleContextType type = SimpleContextType.Pro)
+        public SimpleContextDialog(SimpleContextType type = SimpleContextType.Pro, string value = null)
         {
             InitializeComponent();
             if (type == SimpleContextType.Con)
@@ -32,6 +32,9 @@ namespace MyPlaces.Dialogs
                 TypeIcon.Source = new BitmapImage(new Uri("/Resources/Images/ico_minus.png", UriKind.RelativeOrAbsolute));
             }
             mType = type;
+            
+            if (value != null)
+                Value.Text = value;
 
             OK.Click += new RoutedEventHandler(OnOKClick);
             Cancel.Click += (o, e) => Hide();

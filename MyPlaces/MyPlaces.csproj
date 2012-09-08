@@ -96,6 +96,9 @@
     <Compile Include="Dialogs\AddNewContextItemDialog.xaml.cs">
       <DependentUpon>AddNewContextItemDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\DetailContextDialog.xaml.cs">
+      <DependentUpon>DetailContextDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\SimpleContextDialog.xaml.cs">
       <DependentUpon>SimpleContextDialog.xaml</DependentUpon>
     </Compile>
@@ -148,6 +151,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Dialogs\AddNewContextItemDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\DetailContextDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
