@@ -99,16 +99,19 @@
     <Compile Include="Dialogs\DetailContextDialog.xaml.cs">
       <DependentUpon>DetailContextDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\HasOkButton.cs" />
     <Compile Include="Dialogs\SimpleContextDialog.xaml.cs">
       <DependentUpon>SimpleContextDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\Dialog.cs" />
     <Compile Include="Dialogs\ModalDialog.cs" />
+    <Compile Include="Enums\ContextItemType.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\Detail.cs" />
     <Compile Include="Model\MapItem.cs" />
+    <Compile Include="Model\MapItemContextItem.cs" />
     <Compile Include="Model\SearchResult.cs" />
     <Compile Include="Model\Star.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

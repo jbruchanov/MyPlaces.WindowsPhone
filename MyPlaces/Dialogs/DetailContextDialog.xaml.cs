@@ -15,13 +15,14 @@ using MyPlaces.Model;
 
 namespace MyPlaces.Dialogs
 {
-    public partial class DetailContextDialog : ModalDialog
+    public partial class DetailContextDialog : ModalDialog, HasOkButton<DetailContextDialog.DetailContextTypeEventArgs>
     {
         public event EventHandler<DetailContextTypeEventArgs> OKClick;
         private Detail mDetail;
 
         public DetailContextDialog(Detail d = null)
         {
+            InitializeComponent();
             OK.Click += new RoutedEventHandler(OnOKClick);
             Cancel.Click += (o, e) => Hide();
             

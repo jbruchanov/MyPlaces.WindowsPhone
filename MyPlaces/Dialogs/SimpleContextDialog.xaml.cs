@@ -14,20 +14,15 @@ using System.Windows.Media.Imaging;
 
 namespace MyPlaces.Dialogs
 {
-    public partial class SimpleContextDialog : ModalDialog
+    public partial class SimpleContextDialog : ModalDialog, HasOkButton<SimpleContextDialog.SimpleContextTypeEventArgs>
     {
-        public enum SimpleContextType
-        {
-            Pro, Con
-        };
-
         public event EventHandler<SimpleContextTypeEventArgs> OKClick;
-        private SimpleContextType mType;
+        private ContextItemType mType;
 
-        public SimpleContextDialog(SimpleContextType type = SimpleContextType.Pro, string value = null)
+        public SimpleContextDialog(ContextItemType type = ContextItemType.Pro, string value = null)
         {
             InitializeComponent();
-            if (type == SimpleContextType.Con)
+            if (type == ContextItemType.Con)
             {
                 TypeIcon.Source = new BitmapImage(new Uri("/Resources/Images/ico_minus.png", UriKind.RelativeOrAbsolute));
             }
@@ -50,12 +45,18 @@ namespace MyPlaces.Dialogs
         public class SimpleContextTypeEventArgs : EventArgs
         {
             public string Value { get; private set; }
-            public SimpleContextType Type { get; private set; }
-            public SimpleContextTypeEventArgs(string value, SimpleContextType type)
+            public ContextItemType Type { get; private set; }
+            public SimpleContextTypeEventArgs(string value, ContextItemType type)
             {
                 Value = value;
                 Type = type;
             }
+        }
+
+        event EventHandler<SimpleContextTypeEventArgs> HasOkButton<SimpleContextTypeEventArgs>.OKClick
+        {
+            add { throw new NotImplementedException(); }
+            remove { throw new NotImplementedException(); }
         }
     }
 }

@@ -125,7 +125,7 @@
             </controls:PivotItem>
 
             <controls:PivotItem Header="Context">
-                <ListBox x:Name="lbContext" ItemsSource="{Binding ContextItems}" ItemContainerStyle="{StaticResource ListBoxItemStyle1}"  />
+                <ListBox x:Name="lbContext" ItemsSource="{Binding ContextItemViews}" ItemContainerStyle="{StaticResource ListBoxItemStyle1}"  />
             </controls:PivotItem>
         </controls:Pivot>
     </Grid>
