@@ -332,7 +332,24 @@ namespace MyPlaces.ViewModel
 
         public virtual void OnSaveClick()
         {
-
+            mPage.Focus();// to call binding update for last focused element
+            mServerConnection.Save(GetMapItem(), new DataAsyncCallback<MapItem>((e) =>
+                {
+                    mPage.Dispatcher.BeginInvoke(new Action(() =>
+                        {
+                            if (e.Error == null)
+                            {
+                                ShowToast(Labels.lblDone);
+                                if(mPage.NavigationService.CanGoBack)
+                                    mPage.NavigationService.GoBack();
+                            }
+                            else
+                            {
+                                ShowToast(e.Error.Message);
+                            }
+                        }));
+                    
+                }));
         }
 
         public virtual void OnEditContextClick()
@@ -379,7 +396,8 @@ namespace MyPlaces.ViewModel
                             mPage.Dispatcher.BeginInvoke(new Action(() =>
                             {
                                 ShowToast(Labels.lblDone);
-                                mPage.NavigationService.GoBack();
+                                if (mPage.NavigationService.CanGoBack)
+                                    mPage.NavigationService.GoBack();
                             }));
                         }
                         else
@@ -508,7 +526,19 @@ namespace MyPlaces.ViewModel
 
         public MapItem GetMapItem()
         {
-            return null;
+            MapItem.Pros.Clear();
+            MapItem.Cons.Clear();
+            MapItem.Details.Clear();
+            foreach (MapItemContextItem mici in mContextItems)
+            {
+                if (mici.Type == ContextItemType.Pro)
+                    MapItem.Pros.Add(mici.Value);
+                else if (mici.Type == ContextItemType.Con)
+                    MapItem.Cons.Add(mici.Value);
+                else if (mici.Type == ContextItemType.Detail)
+                    MapItem.Details.Add(mici.Detail);
+            }
+            return MapItem;
         }
     }
 }
