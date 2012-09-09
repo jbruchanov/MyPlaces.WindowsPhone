@@ -476,7 +476,8 @@ namespace MyPlaces.ViewModel
         {
             if (mapItem == null)
             {
-                //notify and go backs
+                MessageBox.Show(Labels.errCantDownloadItemFromServer);
+                mPage.NavigationService.GoBack();
             }
             else
             {

@@ -61,6 +61,15 @@ namespace MyPlaces.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unable to download item from server!.
+        /// </summary>
+        public static string errCantDownloadItemFromServer {
+            get {
+                return ResourceManager.GetString("errCantDownloadItemFromServer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select place on map!.
         /// </summary>
         public static string errSelectPlaceOnMap {
