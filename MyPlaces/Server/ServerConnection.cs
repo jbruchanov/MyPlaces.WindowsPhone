@@ -52,6 +52,7 @@ namespace MyPlaces.Server
         {
             WebRequest req = WebRequest.CreateHttp(mStarsUrl);
             req.Method = GET;
+            req.Headers[HttpRequestHeader.IfModifiedSince] = DateTime.UtcNow.ToString();
             req.BeginGetResponse(new AsyncCallback(
                 (IAsyncResult result) =>
                 {
@@ -185,8 +186,8 @@ namespace MyPlaces.Server
         public void GetMapItems(DataAsyncCallback<List<MapItem>> dataAsyncCallback)
         {
             string url = String.Format(mMapItemsCoordsUrl,-180,-90,90,180);
-            WebRequest req = WebRequest.CreateHttp(url);
-            req.Method = "GET";
+            HttpWebRequest req = WebRequest.CreateHttp(url);
+            req.Headers[HttpRequestHeader.IfModifiedSince] = DateTime.UtcNow.ToString();
             req.BeginGetResponse(new AsyncCallback(
                 (IAsyncResult result) =>
                 {
@@ -194,7 +195,7 @@ namespace MyPlaces.Server
                     Exception err = null;
                     try
                     {
-                        WebResponse s = req.EndGetResponse(result);
+                        WebResponse s = req.EndGetResponse(result);                        
                         string json = ReadStreamToEnd(s.GetResponseStream());
                         s.Close();
                         dataResult = JsonConvert.DeserializeObject<List<MapItem>>(json);
@@ -206,7 +207,7 @@ namespace MyPlaces.Server
                     finally
                     {
                         dataAsyncCallback(new DataAsyncResult<List<MapItem>>(dataResult,err));
-                    }
+                    }                    
                 }), req);     
         }
 
@@ -214,7 +215,8 @@ namespace MyPlaces.Server
         {
             string url = String.Format(mMapItemsUrl + "/" + mapItemId);
             WebRequest req = WebRequest.CreateHttp(url);
-            req.Method = "GET";
+            req.Method = GET;
+            req.Headers[HttpRequestHeader.IfModifiedSince] = DateTime.UtcNow.ToString();
             req.BeginGetResponse(new AsyncCallback(
                 (IAsyncResult result) =>
                 {
@@ -287,7 +289,8 @@ namespace MyPlaces.Server
         public void GetMapItemTypes(DataAsyncCallback<List<string>> dataAsyncCallback)
         {
             WebRequest req = WebRequest.CreateHttp(mMapItemTypesUrl);
-            req.Method = "GET";
+            req.Method = GET;
+            req.Headers[HttpRequestHeader.IfModifiedSince] = DateTime.UtcNow.ToString();
             req.BeginGetResponse(new AsyncCallback(
                 (IAsyncResult result) =>
                 {
