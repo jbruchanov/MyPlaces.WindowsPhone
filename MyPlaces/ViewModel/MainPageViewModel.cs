@@ -176,6 +176,7 @@ namespace MyPlaces.ViewModel
             else if (mState == UsageState.AddingMapItem)
             {
                 NavigateToDetailPage(gc.Longitude, gc.Latitude);
+                mState = UsageState.Default;
             }
         }
 
@@ -195,6 +196,7 @@ namespace MyPlaces.ViewModel
                         AddStarToMap(e.DataResult);
                     }
                 }))));
+            mState = UsageState.Default;
         }
 
         private void MapItemPreview_OpenDetailClick(object sender, DataEventArgs<MapItem> e)
@@ -226,13 +228,43 @@ namespace MyPlaces.ViewModel
         {
             Image i = s.GetImage();
             i.Tag = s;
-            i.MouseLeftButtonUp += new MouseButtonEventHandler((o, e) => { OnItemClick((Star)((FrameworkElement)o).Tag); });
+            i.MouseLeftButtonUp += new MouseButtonEventHandler((o, e) => { OnItemClick(i); });
             mStarsLayer.AddChild(i, new System.Device.Location.GeoCoordinate(s.Y, s.X));
         }
 
-        public virtual void OnItemClick(Star s)
+        public virtual void OnItemClick(Image source)
         {
-            
+            Star s = (Star)(source.Tag);
+            if (string.IsNullOrEmpty(s.Note))
+                s.Note = string.Empty;
+            StarDialog scd = new StarDialog(s);
+            scd.OKClick += new EventHandler<DialogEventArgs<Star>>((o, e) =>
+            {
+                mConnection.Save(e.DataContext, new DataAsyncCallback<Star>(eargs => mPage.Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        if (eargs.Error != null)
+                            App.ShowToast(eargs.Error.Message);
+                        else
+                        {                            
+                            App.ShowToast(Labels.lblDone);
+                        }
+                    }))));
+            });
+            scd.DeleteClick +=  new EventHandler<DialogEventArgs<Star>>((o, e) =>
+            {
+                mConnection.Delete(e.DataContext, new DataAsyncCallback<Star>(eargs => mPage.Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    if (eargs.Error != null)
+                        App.ShowToast(eargs.Error.Message);
+                    else
+                    {
+                        mStarsLayer.Children.Remove(source);
+                        mStars.Remove(s);
+                        App.ShowToast(Labels.lblDone);
+                    }
+                }))));
+            });
+            ShowDialog(scd);
         }
 
         public virtual void OnLoadMapItems(List<MapItem> data)

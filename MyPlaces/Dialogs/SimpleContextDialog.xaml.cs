@@ -37,15 +37,7 @@ namespace MyPlaces.Dialogs
             Cancel.Click += (o, e) => Hide();
         }
 
-        public SimpleContextDialog(string value, ImageSource icon = null)
-        {
-            InitializeComponent();
-            Value.Text = value;
-            if (icon != null)
-                IconImageSource = icon;
-            OK.Click += new RoutedEventHandler(OnOKClick);
-            Cancel.Click += (o, e) => Hide();
-        }
+        
 
         public ImageSource IconImageSource
         {

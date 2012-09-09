@@ -96,6 +96,7 @@
     <Compile Include="Dialogs\AddNewContextItemDialog.xaml.cs">
       <DependentUpon>AddNewContextItemDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\DataEventArgs.cs" />
     <Compile Include="Dialogs\DetailContextDialog.xaml.cs">
       <DependentUpon>DetailContextDialog.xaml</DependentUpon>
     </Compile>
@@ -105,6 +106,7 @@
     </Compile>
     <Compile Include="Dialogs\Dialog.cs" />
     <Compile Include="Dialogs\ModalDialog.cs" />
+    <Compile Include="Dialogs\StarDialog.cs" />
     <Compile Include="Enums\ContextItemType.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
