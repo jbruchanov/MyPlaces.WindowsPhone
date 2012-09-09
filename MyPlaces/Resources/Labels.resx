@@ -147,6 +147,9 @@
   <data name="lblDetail" xml:space="preserve">
     <value>Detail</value>
   </data>
+  <data name="lblDone" xml:space="preserve">
+    <value>Done</value>
+  </data>
   <data name="lblEmptyValues" xml:space="preserve">
     <value>Empty Value(s)</value>
   </data>
@@ -176,6 +179,9 @@
   </data>
   <data name="lblRating" xml:space="preserve">
     <value>Rating</value>
+  </data>
+  <data name="lblRUSure" xml:space="preserve">
+    <value>Are you sure?</value>
   </data>
   <data name="lblSave" xml:space="preserve">
     <value>Save</value>

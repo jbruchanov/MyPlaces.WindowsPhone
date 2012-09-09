@@ -151,6 +151,15 @@ namespace MyPlaces.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Done.
+        /// </summary>
+        public static string lblDone {
+            get {
+                return ResourceManager.GetString("lblDone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Empty Value(s).
         /// </summary>
         public static string lblEmptyValues {
@@ -237,6 +246,15 @@ namespace MyPlaces.Resources {
         public static string lblRating {
             get {
                 return ResourceManager.GetString("lblRating", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure?.
+        /// </summary>
+        public static string lblRUSure {
+            get {
+                return ResourceManager.GetString("lblRUSure", resourceCulture);
             }
         }
         

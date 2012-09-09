@@ -370,7 +370,24 @@ namespace MyPlaces.ViewModel
 
         public virtual void OnDeleteMapItemClick()
         {
-
+            if (MessageBox.Show("", Labels.lblRUSure, MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+            {
+                mServerConnection.Delete(MapItem, new DataAsyncCallback<MapItem>( (e) =>
+                    {
+                        if(e.Error == null)
+                        {
+                            mPage.Dispatcher.BeginInvoke(new Action(() =>
+                            {
+                                ShowToast(Labels.lblDone);
+                                mPage.NavigationService.GoBack();
+                            }));
+                        }
+                        else
+                        {
+                            ShowToast(e.Error.Message);
+                        }
+                    }));
+            }
         }
 
         public virtual void OnAddClick()
@@ -478,11 +495,7 @@ namespace MyPlaces.ViewModel
 
         private void ShowToast(string msg, string title = "")
         {
-            ToastPrompt tp = new ToastPrompt();
-            tp.Title = title;
-            tp.Message = msg;
-            tp.TextWrapping = TextWrapping.Wrap;
-            tp.Show();
+            App.ShowToast(msg, title);
         }
 
         public void ShowDialog(Dialog d)
