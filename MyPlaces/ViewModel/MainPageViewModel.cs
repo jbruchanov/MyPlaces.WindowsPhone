@@ -24,12 +24,13 @@ namespace MyPlaces.ViewModel
         private List<Star> mStars;
         private List<MapItem> mMapItems;
         private ServerConnection mConnection;
-        private MapLayer mSmileysLayer;
+        private MapLayer mStarsLayer;
         private MapLayer mItemsLayer;
         private Dialog mDialog;
 
         private GeoCoordinateWatcher mGeoWatcher;
         private Pushpin mMyLocation;
+        private bool mIsInitialized = false;
 
         public MainPageViewModel(MainPage page)
         {
@@ -58,17 +59,22 @@ namespace MyPlaces.ViewModel
 
         private void Init()
         {
-            mSmileysLayer = new MapLayer();
-            mItemsLayer = new MapLayer();
-
-            mPage.Map.Children.Add(mSmileysLayer);
-            mPage.Map.Children.Add(mItemsLayer);
-            mConnection = new ServerConnection();
+            if (!mIsInitialized)
+            {
+                mStarsLayer = new MapLayer();
+                mPage.Map.Children.Add(mStarsLayer);
+                mItemsLayer = new MapLayer();
+                mPage.Map.Children.Add(mItemsLayer);
+                mConnection = new ServerConnection();
+                mPage.MapItemPreview.OpenDetailClick += new EventHandler<DataEventArgs<MapItem>>(MapItemPreview_OpenDetailClick);
+                mPage.Map.MouseLeftButtonUp += new MouseButtonEventHandler(OnMapClick);
+                mPage.AddButton.Click += new RoutedEventHandler(OnAddClick);
+                mIsInitialized = true;
+            }
+            
             mConnection.GetStars(new DataAsyncCallback<List<Star>>((res) => { mPage.Dispatcher.BeginInvoke(new Action(() => OnLoadStars(res.DataResult))); }));
             mConnection.GetMapItems(new DataAsyncCallback<List<MapItem>>((res) => { mPage.Dispatcher.BeginInvoke(new Action(() => OnLoadMapItems(res.DataResult))); }));
-            mPage.MapItemPreview.OpenDetailClick += new EventHandler<DataEventArgs<MapItem>>(MapItemPreview_OpenDetailClick);
-            mPage.Map.MouseLeftButtonUp += new MouseButtonEventHandler(OnMapClick);
-            mPage.AddButton.Click += new RoutedEventHandler(OnAddClick);
+            
             InitGeoLocation();
             
         }
@@ -173,12 +179,14 @@ namespace MyPlaces.ViewModel
             if (data == null)
                 data = new List<Star>();
             mStars = data;
+            if (mStarsLayer != null)
+                mStarsLayer.Children.Clear();
             foreach (Star s in data)
             {
                 Image i = s.GetImage();
                 i.Tag = s;
                 i.MouseLeftButtonUp += new MouseButtonEventHandler((o, e) => { OnItemClick((Star)((FrameworkElement)o).Tag); });
-                mSmileysLayer.AddChild(i, new System.Device.Location.GeoCoordinate(s.Y, s.X));
+                mStarsLayer.AddChild(i, new System.Device.Location.GeoCoordinate(s.Y, s.X));
                 
             }
         }
@@ -194,6 +202,8 @@ namespace MyPlaces.ViewModel
             if (data == null)
                 data = new List<MapItem>();
             mMapItems = data;
+            if (mItemsLayer != null)
+                mItemsLayer.Children.Clear();
             foreach (MapItem mi in data)
             {
                 Image i = mi.GetImage();
