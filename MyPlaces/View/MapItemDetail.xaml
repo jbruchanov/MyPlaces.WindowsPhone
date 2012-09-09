@@ -94,27 +94,27 @@
                 <ScrollViewer>
                     <StackPanel Orientation="Vertical" DataContext="{Binding MapItem}">
                         <TextBlock Text="{Binding Labels.lblName, Source={StaticResource Labels}}" Foreground="White" />
-                        <TextBox x:Name="txtName" Text="{Binding Name}" />
+                        <TextBox x:Name="txtName" Text="{Binding Name, Mode=TwoWay}" />
                         <TextBlock Text="{Binding Labels.lblStreet, Source={StaticResource Labels}}" />
-                        <TextBox x:Name="txtStreet" Text="{Binding Street}"/>
+                        <TextBox x:Name="txtStreet" Text="{Binding Street, Mode=TwoWay}"/>
                         <TextBlock Text="{Binding Labels.lblCity, Source={StaticResource Labels}}" />
-                        <TextBox x:Name="txtCity" Text="{Binding City}"/>
+                        <TextBox x:Name="txtCity" Text="{Binding City, Mode=TwoWay}"/>
                         <TextBlock Text="{Binding Labels.lblCountry, Source={StaticResource Labels}}" />
-                        <TextBox x:Name="txtCountry" Text="{Binding Country}"/>
+                        <TextBox x:Name="txtCountry" Text="{Binding Country, Mode=TwoWay}"/>
                         <TextBlock Text="{Binding Labels.lblType, Source={StaticResource Labels}}" />
                         <toolkit:ListPicker x:Name="lpType" SelectedItem="{Binding Type}"/>
                         <TextBlock Text="{Binding Labels.lblContact, Source={StaticResource Labels}}" />
-                        <TextBox x:Name="txtContact" Text="{Binding Contact}"/>
+                        <TextBox x:Name="txtContact" Text="{Binding Contact, Mode=TwoWay}"/>
                         <TextBlock Text="{Binding Labels.lblWebLink, Source={StaticResource Labels}}" />
-                        <TextBox x:Name="txtWebLink" Text="{Binding Web}"/>
+                        <TextBox x:Name="txtWebLink" Text="{Binding Web, Mode=TwoWay}"/>
                         <TextBlock Text="{Binding Labels.lblAuthor, Source={StaticResource Labels}}" />
-                        <TextBox x:Name="txtAuthor" Text="{Binding Author}"/>
+                        <TextBox x:Name="txtAuthor" Text="{Binding Author, Mode=TwoWay}"/>
                         <TextBlock Text="{Binding Labels.lblRating, Source={StaticResource Labels}}" />
-                        <TextBox x:Name="txtRating" Text="{Binding Rating}"/>
+                        <TextBox x:Name="txtRating" Text="{Binding Rating, Mode=TwoWay}"/>
                         <TextBlock Text="{Binding Labels.lblLatitude, Source={StaticResource Labels}}" />
-                        <TextBox x:Name="txtLatitude" Text="{Binding Y}" IsReadOnly="True"/>
+                        <TextBox x:Name="txtLatitude" Text="{Binding Y, Mode=TwoWay}" IsReadOnly="True"/>
                         <TextBlock Text="{Binding Labels.lblLongtitude, Source={StaticResource Labels}}" />
-                        <TextBox x:Name="txtLongtitude" Text="{Binding X}" IsReadOnly="True"/>
+                        <TextBox x:Name="txtLongtitude" Text="{Binding X, Mode=TwoWay}" IsReadOnly="True"/>
                     </StackPanel>
                 </ScrollViewer>
             </controls:PivotItem>
