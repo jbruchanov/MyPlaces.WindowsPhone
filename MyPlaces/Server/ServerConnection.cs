@@ -33,6 +33,7 @@ namespace MyPlaces.Server
         private const string GET = "GET";
         private const string POST = "POST";
         private const string DELETE = "DELETE";
+        private const string CONTENT_TYPE_JSON = "text/json; charset=UTF-8";
 
         public ServerConnection(string url = "http://myplaces.scurab.com:8182")
         {
@@ -79,6 +80,7 @@ namespace MyPlaces.Server
         {
             WebRequest wr = WebRequest.CreateHttp(mStarsUrl);
             wr.Method = (s.ID == 0) ? POST : PUT;
+            wr.ContentType = CONTENT_TYPE_JSON;
             wr.BeginGetRequestStream(new AsyncCallback((iAsyncResult) =>
                 {
                     try
@@ -242,14 +244,15 @@ namespace MyPlaces.Server
 
         public void Save(MapItem mi, DataAsyncCallback<MapItem> Callback)
         {
-            WebRequest wr = WebRequest.CreateHttp(mMapItemsUrl);
+            WebRequest wr = WebRequest.CreateHttp(mMapItemsUrl + "/" + mi.ID);
             wr.Method = (mi.ID == 0) ? POST : PUT;
+            wr.ContentType = CONTENT_TYPE_JSON;
             wr.BeginGetRequestStream(new AsyncCallback((iAsyncResult) =>
             {
                 try
                 {
                     string json = JsonConvert.SerializeObject(mi);
-                    byte[] data = System.Text.Encoding.UTF8.GetBytes(json);
+                    byte[] data = System.Text.Encoding.UTF8.GetBytes(json);                    
                     Stream stream = wr.EndGetRequestStream(iAsyncResult);
                     stream.Write(data, 0, data.Length);
                     stream.Close();
