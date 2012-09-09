@@ -170,6 +170,8 @@ namespace MyPlaces.ViewModel
 
         public virtual void OnLoadStars(List<Star> data)
         {
+            if (data == null)
+                data = new List<Star>();
             mStars = data;
             foreach (Star s in data)
             {
@@ -189,6 +191,8 @@ namespace MyPlaces.ViewModel
 
         public virtual void OnLoadMapItems(List<MapItem> data)
         {
+            if (data == null)
+                data = new List<MapItem>();
             mMapItems = data;
             foreach (MapItem mi in data)
             {
