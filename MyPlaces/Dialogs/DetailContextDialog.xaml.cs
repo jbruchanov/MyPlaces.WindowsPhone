@@ -12,6 +12,7 @@ using System.Windows.Shapes;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media.Imaging;
 using MyPlaces.Model;
+using MyPlaces.Resources;
 
 namespace MyPlaces.Dialogs
 {
@@ -19,6 +20,7 @@ namespace MyPlaces.Dialogs
     {
         public event EventHandler<DetailContextTypeEventArgs> OKClick;
         private Detail mDetail;
+        public bool AllowEmptyValues { get; set; }
 
         public DetailContextDialog(Detail d = null)
         {
@@ -29,15 +31,26 @@ namespace MyPlaces.Dialogs
             if (d == null)
                 d = new Detail { Text = string.Empty, What = string.Empty, Time = DateTime.Now };
             SetDetail(d);
+            AllowEmptyValues = false;
         }
 
         protected virtual void OnOKClick(object sender, RoutedEventArgs e)
         {
-            if (OKClick != null)
+            try
             {
-                OKClick.Invoke(this, new DetailContextTypeEventArgs(GetDetail()));
+                if (string.IsNullOrEmpty(Title.Text) && !AllowEmptyValues)
+                    throw new Exception(Labels.lblEmptyValues);
+
+                if (OKClick != null)
+                {
+                    OKClick.Invoke(this, new DetailContextTypeEventArgs(GetDetail()));
+                }
+                Hide();
             }
-            Hide();
+            catch (Exception ex)
+            {
+                App.ShowMessage(ex.Message);
+            }
         }
 
         public class DetailContextTypeEventArgs : EventArgs

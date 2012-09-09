@@ -8,6 +8,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using Coding4Fun.Phone.Controls;
 
 namespace MyPlaces
 {
@@ -45,5 +46,17 @@ namespace MyPlaces
             }
         }
 
+        public static void ShowToast(string msg, string title = null)
+        {
+            ToastPrompt tp = new ToastPrompt();
+            tp.Title = title;
+            tp.Message = msg;
+            tp.Show();
+        }
+
+        public static void ShowMessage(string msg)
+        {
+            MessageBox.Show(msg);
+        }
     }
 }

@@ -151,6 +151,15 @@ namespace MyPlaces.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Empty Value(s).
+        /// </summary>
+        public static string lblEmptyValues {
+            get {
+                return ResourceManager.GetString("lblEmptyValues", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Found.
         /// </summary>
         public static string lblFound {

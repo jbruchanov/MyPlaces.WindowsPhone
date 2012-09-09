@@ -147,6 +147,9 @@
   <data name="lblDetail" xml:space="preserve">
     <value>Detail</value>
   </data>
+  <data name="lblEmptyValues" xml:space="preserve">
+    <value>Empty Value(s)</value>
+  </data>
   <data name="lblFound" xml:space="preserve">
     <value>Found</value>
   </data>

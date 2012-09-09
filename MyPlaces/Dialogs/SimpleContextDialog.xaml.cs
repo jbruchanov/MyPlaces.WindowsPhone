@@ -11,13 +11,15 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media.Imaging;
+using MyPlaces.Resources;
 
 namespace MyPlaces.Dialogs
 {
     public partial class SimpleContextDialog : ModalDialog, HasOkButton<SimpleContextDialog.SimpleContextTypeEventArgs>
     {
-        public event EventHandler<SimpleContextTypeEventArgs> OKClick;
+        public event EventHandler<SimpleContextDialog.SimpleContextTypeEventArgs> OKClick;
         private ContextItemType mType;
+        public bool AllowEmptyValues { get; set; }
 
         public SimpleContextDialog(ContextItemType type = ContextItemType.Pro, string value = null)
         {
@@ -37,9 +39,19 @@ namespace MyPlaces.Dialogs
 
         protected virtual void OnOKClick(object sender, RoutedEventArgs e)
         {
-            if (OKClick != null)
-                OKClick.Invoke(this, new SimpleContextTypeEventArgs(Value.Text, mType));
-            Hide();
+            try
+            {
+                if (string.IsNullOrEmpty(Value.Text) && !AllowEmptyValues)
+                    throw new Exception(Labels.lblEmptyValues);
+
+                if (OKClick != null)
+                    OKClick.Invoke(this, new SimpleContextTypeEventArgs(Value.Text, mType));
+                Hide();
+            }
+            catch (Exception ex)
+            {
+                App.ShowMessage(ex.Message);
+            }
         }
 
         public class SimpleContextTypeEventArgs : EventArgs
@@ -51,12 +63,6 @@ namespace MyPlaces.Dialogs
                 Value = value;
                 Type = type;
             }
-        }
-
-        event EventHandler<SimpleContextTypeEventArgs> HasOkButton<SimpleContextTypeEventArgs>.OKClick
-        {
-            add { throw new NotImplementedException(); }
-            remove { throw new NotImplementedException(); }
         }
     }
 }
