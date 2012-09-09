@@ -126,7 +126,21 @@ namespace MyPlaces.ViewModel
         
         void OnAddClick(object sender, RoutedEventArgs e)
         {
-            ShowDialog(new AddStarDialog());
+            AddNewItemDialog anid = new AddNewItemDialog(mPage.AddButton);
+            anid.Click += (o, eargs) =>
+                {
+                    if (eargs.OriginalSource == anid.MapItem)
+                    {
+                        //todo adding map item state
+                    }
+                    else if (e.OriginalSource == anid.Star)
+                    {
+                        AddStarDialog asd = new AddStarDialog();
+                        //todo
+                        ShowDialog(asd);
+                    }
+                };
+            ShowDialog(anid);
         }
 
         protected void ShowDialog(Dialog d)
@@ -146,8 +160,7 @@ namespace MyPlaces.ViewModel
         {
             if (e.DataContext != null)
             {
-                string uri = String.Format("/View/MapItemDetail.xaml?{0}={1}", App.MAP_ITEM_ID, e.DataContext.ID);
-                mPage.NavigationService.Navigate(new Uri(uri, UriKind.RelativeOrAbsolute));
+                NavigateToDetailPage(Convert.ToString(e.DataContext.ID));
             }
             else
             {
@@ -191,6 +204,18 @@ namespace MyPlaces.ViewModel
             //MessageBox.Show(mi.Name);
             mPage.Map.Center = new System.Device.Location.GeoCoordinate(mi.Y, mi.X);
             mPage.MapItemPreview.Show(mi);
+        }
+
+        public void NavigateToDetailPage(string id)
+        {
+            string uri = String.Format("/View/MapItemDetail.xaml?{0}={1}", App.MAP_ITEM_ID, id);
+            mPage.NavigationService.Navigate(new Uri(uri, UriKind.RelativeOrAbsolute));
+        }
+
+        public void NavigateToDetailPage(double x, double y)
+        {
+            string uri = String.Format("/View/MapItemDetail.xaml?{0}={1}&{2}={3}",App.X, x, App.Y, y);
+            mPage.NavigationService.Navigate(new Uri(uri, UriKind.RelativeOrAbsolute));
         }
     }
 }
