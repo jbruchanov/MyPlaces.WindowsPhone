@@ -19,6 +19,7 @@ namespace MyPlaces.Server
 {
     public class ServerConnection
     {
+
         private string mServerUrl;
         private string mStarsUrl;
         private string mMapItemsUrl;
@@ -36,6 +37,7 @@ namespace MyPlaces.Server
         private const string DELETE = "DELETE";
         private const string CONTENT_TYPE_JSON = "text/json; charset=UTF-8";
         private static readonly IsoDateTimeConverter DATETIME_CONVERTER = new IsoDateTimeConverter() { DateTimeFormat = "yyyy-MM-dd hh:mm:ss" };
+        
 
         public ServerConnection(string url = "http://myplaces.scurab.com:8182")
         {

@@ -135,6 +135,9 @@
   <data name="lblCity" xml:space="preserve">
     <value>City</value>
   </data>
+  <data name="lblClickToMapForPosition" xml:space="preserve">
+    <value>Click to map for set position</value>
+  </data>
   <data name="lblContact" xml:space="preserve">
     <value>Contact</value>
   </data>

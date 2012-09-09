@@ -115,6 +115,15 @@ namespace MyPlaces.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Click to map for set position.
+        /// </summary>
+        public static string lblClickToMapForPosition {
+            get {
+                return ResourceManager.GetString("lblClickToMapForPosition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Contact.
         /// </summary>
         public static string lblContact {

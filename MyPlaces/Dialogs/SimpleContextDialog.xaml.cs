@@ -26,7 +26,7 @@ namespace MyPlaces.Dialogs
             InitializeComponent();
             if (type == ContextItemType.Con)
             {
-                TypeIcon.Source = new BitmapImage(new Uri("/Resources/Images/ico_minus.png", UriKind.RelativeOrAbsolute));
+                IconImageSource = new BitmapImage(new Uri("/Resources/Images/ico_minus.png", UriKind.RelativeOrAbsolute));
             }
             mType = type;
             
@@ -35,6 +35,28 @@ namespace MyPlaces.Dialogs
 
             OK.Click += new RoutedEventHandler(OnOKClick);
             Cancel.Click += (o, e) => Hide();
+        }
+
+        public SimpleContextDialog(string value, ImageSource icon = null)
+        {
+            InitializeComponent();
+            Value.Text = value;
+            if (icon != null)
+                IconImageSource = icon;
+            OK.Click += new RoutedEventHandler(OnOKClick);
+            Cancel.Click += (o, e) => Hide();
+        }
+
+        public ImageSource IconImageSource
+        {
+            get
+            {
+                return TypeIcon.Source;
+            }
+            set
+            {
+                TypeIcon.Source = value;
+            }
         }
 
         protected virtual void OnOKClick(object sender, RoutedEventArgs e)

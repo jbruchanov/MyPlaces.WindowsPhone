@@ -33,14 +33,14 @@ namespace MyPlaces.Dialogs
         void MapItem_Click(object sender, RoutedEventArgs e)
         {
             if (Click != null)
-                Click.Invoke(this, e);
+                Click.Invoke(sender, e);
             Hide();
         }
 
         void Star_Click(object sender, RoutedEventArgs e)
         {
             if (Click != null)
-                Click.Invoke(this, e);
+                Click.Invoke(sender, e);
             Hide();
         }
 

@@ -96,6 +96,10 @@ namespace MyPlaces.Model
             else
                 t = t.ToLower();
 
+            if (string.IsNullOrEmpty(t))
+                Type = t = string.Empty;
+            
+
             if (t.Equals("hospoda"))
                 result = new Image { Source = new BitmapImage(new Uri("/Resources/Images/ico_beer.png", UriKind.RelativeOrAbsolute)) };
             else if (t.Equals("bar"))

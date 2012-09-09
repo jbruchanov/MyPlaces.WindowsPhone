@@ -15,6 +15,7 @@ using Microsoft.Phone.Controls.Maps;
 using MyPlaces.Dialogs;
 using System.Device.Location;
 using System.Threading;
+using MyPlaces.Resources;
 
 namespace MyPlaces.ViewModel
 {
@@ -32,6 +33,12 @@ namespace MyPlaces.ViewModel
         private Pushpin mMyLocation;
         private bool mIsInitialized = false;
 
+        private enum UsageState
+        {
+            Default, AddingStar, AddingMapItem
+        }
+        private UsageState mState = UsageState.Default;
+
         public MainPageViewModel(MainPage page)
         {
             mPage = page;
@@ -41,6 +48,7 @@ namespace MyPlaces.ViewModel
 
         void OnBackPress(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            mState = UsageState.Default;
             if (mDialog != null)
             {
                 e.Cancel = mDialog.Hide();
@@ -130,20 +138,19 @@ namespace MyPlaces.ViewModel
         }
 
         
-        void OnAddClick(object sender, RoutedEventArgs e)
+        protected void OnAddClick(object sender, RoutedEventArgs e)
         {
             AddNewItemDialog anid = new AddNewItemDialog(mPage.AddButton);
             anid.Click += (o, eargs) =>
                 {
-                    if (eargs.OriginalSource == anid.MapItem)
+                    App.ShowToast(Labels.lblClickToMapForPosition);
+                    if (o == anid.MapItem)
                     {
-                        //todo adding map item state
+                        mState = UsageState.AddingMapItem;
                     }
-                    else if (e.OriginalSource == anid.Star)
+                    else if (o == anid.Star)
                     {
-                        AddStarDialog asd = new AddStarDialog();
-                        //todo
-                        ShowDialog(asd);
+                        mState = UsageState.AddingStar;
                     }
                 };
             ShowDialog(anid);
@@ -157,9 +164,37 @@ namespace MyPlaces.ViewModel
             mDialog.Show();
         }
 
-        void OnMapClick(object sender, MouseButtonEventArgs e)
+        protected virtual void OnMapClick(object sender, MouseButtonEventArgs e)
         {
-            
+            GeoCoordinate gc = mPage.Map.ViewportPointToLocation(e.GetPosition(mPage.Map));
+            if (mState == UsageState.AddingStar)
+            {
+                AddStarDialog asd = new AddStarDialog(gc);
+                asd.Click += new EventHandler<AddStarDialog.StarEventHandler>((o, eargs) => mPage.Dispatcher.BeginInvoke(new Action(() => { asd.Hide(); OnAddStar(eargs.Type, eargs.Position); })));
+                ShowDialog(asd);
+            }
+            else if (mState == UsageState.AddingMapItem)
+            {
+                NavigateToDetailPage(gc.Longitude, gc.Latitude);
+            }
+        }
+
+        public virtual void OnAddStar(string type, GeoCoordinate position)
+        {
+            Star s = new Star();
+            s.Type = type;
+            s.X = position.Longitude;
+            s.Y = position.Latitude;
+            s.Note = string.Empty;           
+            mConnection.Save(s, new DataAsyncCallback<Star>((e) => mPage.Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    if (e.Error != null)
+                        App.ShowToast(e.Error.Message);
+                    else
+                    {
+                        AddStarToMap(e.DataResult);
+                    }
+                }))));
         }
 
         private void MapItemPreview_OpenDetailClick(object sender, DataEventArgs<MapItem> e)
@@ -183,18 +218,21 @@ namespace MyPlaces.ViewModel
                 mStarsLayer.Children.Clear();
             foreach (Star s in data)
             {
-                Image i = s.GetImage();
-                i.Tag = s;
-                i.MouseLeftButtonUp += new MouseButtonEventHandler((o, e) => { OnItemClick((Star)((FrameworkElement)o).Tag); });
-                mStarsLayer.AddChild(i, new System.Device.Location.GeoCoordinate(s.Y, s.X));
-                
+                AddStarToMap(s);
             }
+        }
+
+        protected void AddStarToMap(Star s)
+        {
+            Image i = s.GetImage();
+            i.Tag = s;
+            i.MouseLeftButtonUp += new MouseButtonEventHandler((o, e) => { OnItemClick((Star)((FrameworkElement)o).Tag); });
+            mStarsLayer.AddChild(i, new System.Device.Location.GeoCoordinate(s.Y, s.X));
         }
 
         public virtual void OnItemClick(Star s)
         {
-            MessageBox.Show(s.Note);
-            //mPage.MapItemPreview.Show();
+            
         }
 
         public virtual void OnLoadMapItems(List<MapItem> data)

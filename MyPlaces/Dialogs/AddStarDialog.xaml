@@ -34,58 +34,58 @@
                         <RowDefinition />
                     </Grid.RowDefinitions>
                     <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
-                        <Button >
+                        <Button Tag="10" >
                             <Button.Content>
                                 <Image Source="/Resources/Images/ico_star.png" Stretch="None" />
                             </Button.Content>
                         </Button>
-                        <Button>
+                        <Button Tag="11">
                             <Button.Content>
                                 <Image Source="/Resources/Images/ico_cafe.png" Stretch="None" />
                             </Button.Content>
                         </Button>
                     </StackPanel>
                     <StackPanel Grid.Row="1" Orientation="Horizontal">
-                        <Button >
+                        <Button Tag="12">
                             <Button.Content>
                                 <Image Source="/Resources/Images/ico_drink.png" Stretch="None" />
                             </Button.Content>
                         </Button>
-                        <Button>
+                        <Button Tag="13">
                             <Button.Content>
                                 <Image Source="/Resources/Images/ico_wine.png" Stretch="None" />
                             </Button.Content>
                         </Button>
-                        <Button>
+                        <Button Tag="14">
                             <Button.Content>
                                 <Image Source="/Resources/Images/ico_search.png" Stretch="None" />
                             </Button.Content>
                         </Button>
                     </StackPanel>
                     <StackPanel Grid.Row="2" Orientation="Horizontal">
-                        <Button >
+                        <Button Tag="20">
                             <Button.Content>
                                 <Image Source="/Resources/Images/ico_smile_happy.png" Stretch="None" />
                             </Button.Content>
                         </Button>
-                        <Button>
+                        <Button Tag="21">
                             <Button.Content>
                                 <Image Source="/Resources/Images/ico_smile_lick.png" Stretch="None" />
                             </Button.Content>
                         </Button>
-                        <Button>
+                        <Button Tag="22">
                             <Button.Content>
                                 <Image Source="/Resources/Images/ico_smile_neutral.png" Stretch="None" />
                             </Button.Content>
                         </Button>
                     </StackPanel>
                     <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">
-                        <Button >
+                        <Button Tag="23">
                             <Button.Content>
                                 <Image Source="/Resources/Images/ico_smile_unhappy.png" Stretch="None" />
                             </Button.Content>
                         </Button>
-                        <Button>
+                        <Button Tag="24">
                             <Button.Content>
                                 <Image Source="/Resources/Images/ico_smile_veryhappy.png" Stretch="None" />
                             </Button.Content>

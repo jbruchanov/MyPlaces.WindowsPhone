@@ -65,7 +65,7 @@ namespace MyPlaces.ViewModel
             {
                 double cx = Convert.ToDouble(queryString[App.X]);
                 double cy = Convert.ToDouble(queryString[App.Y]);
-                SetMapItem(new MapItem { X = cx, Y = cy });
+                SetMapItem(new MapItem { X = cx, Y = cy, Pros = new List<string>(), Cons = new List<string>(), Details = new List<Detail>() });
             }
             else
                 quit = true;
@@ -526,7 +526,7 @@ namespace MyPlaces.ViewModel
         }
 
         public MapItem GetMapItem()
-        {
+        {           
             MapItem.Pros.Clear();
             MapItem.Cons.Clear();
             MapItem.Details.Clear();
@@ -539,6 +539,8 @@ namespace MyPlaces.ViewModel
                 else if (mici.Type == ContextItemType.Detail)
                     MapItem.Details.Add(mici.Detail);
             }
+            if (string.IsNullOrEmpty(MapItem.Type))
+                MapItem.Type = mPage.lpType.SelectedItem as string;
             return MapItem;
         }
     }
