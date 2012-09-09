@@ -13,6 +13,7 @@ using MyPlaces.Model;
 using System.IO;
 using System.Text;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace MyPlaces.Server
 {
@@ -34,9 +35,11 @@ namespace MyPlaces.Server
         private const string POST = "POST";
         private const string DELETE = "DELETE";
         private const string CONTENT_TYPE_JSON = "text/json; charset=UTF-8";
+        private static readonly IsoDateTimeConverter DATETIME_CONVERTER = new IsoDateTimeConverter() { DateTimeFormat = "yyyy-MM-dd hh:mm:ss" };
 
         public ServerConnection(string url = "http://myplaces.scurab.com:8182")
         {
+            //url = "http://127.0.0.1:8182";
             mServerUrl = url;
             mStarsUrl = mServerUrl + STARS_SUFFIX;
             mMapItemsUrl = mServerUrl + MAPITEMS_SUFFIX;
@@ -64,7 +67,7 @@ namespace MyPlaces.Server
                         string json = ReadStreamToEnd(s.GetResponseStream());
                         s.Close();
 
-                        dataResult = JsonConvert.DeserializeObject<List<Star>>(json);
+                        dataResult = JsonConvert.DeserializeObject<List<Star>>(json, DATETIME_CONVERTER);
                     }
                     catch (Exception e)
                     {
@@ -86,7 +89,7 @@ namespace MyPlaces.Server
                 {
                     try
                     {
-                        string json = JsonConvert.SerializeObject(s);
+                        string json = JsonConvert.SerializeObject(s, Formatting.None, DATETIME_CONVERTER);
                         byte[] data = System.Text.Encoding.UTF8.GetBytes(json);
                         Stream stream = wr.EndGetRequestStream(iAsyncResult);
                         stream.Write(data, 0, data.Length);
@@ -100,7 +103,9 @@ namespace MyPlaces.Server
                                     WebResponse resp = wr.EndGetResponse(iAsyncResult2);
                                     string respText = ReadStreamToEnd(resp.GetResponseStream());
                                     resp.Close();
-                                    saved = JsonConvert.DeserializeObject<Star>(respText);                                  
+                                    saved = JsonConvert.DeserializeObject<Star>(respText, DATETIME_CONVERTER);
+                                    if (saved == null)
+                                        saved = s;
                                 }
                                 catch (Exception e)
                                 {
@@ -198,7 +203,7 @@ namespace MyPlaces.Server
                         WebResponse s = req.EndGetResponse(result);                        
                         string json = ReadStreamToEnd(s.GetResponseStream());
                         s.Close();
-                        dataResult = JsonConvert.DeserializeObject<List<MapItem>>(json);
+                        dataResult = JsonConvert.DeserializeObject<List<MapItem>>(json, DATETIME_CONVERTER);
                     }
                     catch (Exception e)
                     {
@@ -227,7 +232,7 @@ namespace MyPlaces.Server
                         WebResponse s = req.EndGetResponse(result);
                         string json = ReadStreamToEnd(s.GetResponseStream());
                         s.Close();
-                        List<MapItem> subResult = JsonConvert.DeserializeObject<List<MapItem>>(json);
+                        List<MapItem> subResult = JsonConvert.DeserializeObject<List<MapItem>>(json, DATETIME_CONVERTER);
                         if (subResult.Count == 1)
                             dataResult = subResult[0];                       
                     }
@@ -253,7 +258,7 @@ namespace MyPlaces.Server
             {
                 try
                 {
-                    string json = JsonConvert.SerializeObject(mi);
+                    string json = JsonConvert.SerializeObject(mi, Formatting.None, DATETIME_CONVERTER);
                     byte[] data = System.Text.Encoding.UTF8.GetBytes(json);                    
                     Stream stream = wr.EndGetRequestStream(iAsyncResult);
                     stream.Write(data, 0, data.Length);
@@ -268,6 +273,8 @@ namespace MyPlaces.Server
                             string respText = ReadStreamToEnd(resp.GetResponseStream());
                             resp.Close();
                             saved = JsonConvert.DeserializeObject<MapItem>(respText);
+                            if (saved == null)
+                                saved = mi;
                         }
                         catch (Exception e)
                         {
@@ -301,7 +308,7 @@ namespace MyPlaces.Server
                         WebResponse s = req.EndGetResponse(result);
                         string json = ReadStreamToEnd(s.GetResponseStream());
                         s.Close();
-                        dataResult = JsonConvert.DeserializeObject<List<string>>(json);                        
+                        dataResult = JsonConvert.DeserializeObject<List<string>>(json, DATETIME_CONVERTER);                        
                     }
                     catch (Exception e)
                     {
