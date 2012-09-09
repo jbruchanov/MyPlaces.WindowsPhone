@@ -27,7 +27,7 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <Image Name="TypeIcon" Source="/Resources/Images/ico_plus.png" Grid.Row="0" Stretch="None"/>
-                <toolkit:PhoneTextBox Grid.Row="1" Name="Value" Height="225" VerticalContentAlignment="Top" AcceptsReturn="True" />
+                <toolkit:PhoneTextBox Grid.Row="1" Name="Value" Height="170" VerticalContentAlignment="Top" AcceptsReturn="True" />
                 <Line X1="0" X2="480" Grid.Row="2" StrokeThickness="2" Stroke="White"/>
                 <Grid Grid.Row="3">
                     <Grid.ColumnDefinitions>
